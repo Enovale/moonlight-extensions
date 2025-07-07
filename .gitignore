@@ -1,4 +1,4 @@
-/**/dist
-/**/repo
-/**/node_modules
-/**/.direnv
+/dist
+/repo
+/node_modules
+/.direnv
