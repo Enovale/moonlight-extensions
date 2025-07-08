@@ -5,15 +5,14 @@ import {
     i18n
 } from "./components";
 import { User } from "@moonlight-mod/types";
-import { Clickable, FormTitle, Tooltip, FormText, UserSummaryItem } from "@moonlight-mod/wp/discord/components/common/index";
+import { Clickable, FormTitle, Tooltip, FormText } from "@moonlight-mod/wp/discord/components/common/index";
+import UserSummaryItem from "@moonlight-mod/wp/discord/components/common/UserSummaryItem";
+import { openUserProfileModal } from "@moonlight-mod/wp/discord/actions/UserProfileModalActionCreators";
 import { UserStore, RelationshipStore } from "@moonlight-mod/wp/common_stores";
 import { useStateFromStores } from "@moonlight-mod/wp/discord/packages/flux";
 import ErrorBoundary from "@moonlight-mod/wp/common_ErrorBoundary";
 import Flex from "@moonlight-mod/wp/discord/uikit/Flex";
 import React from "@moonlight-mod/wp/react";
-
-import spacepack from "@moonlight-mod/wp/spacepack_spacepack";
-const { openUserProfileModal } = spacepack.require("discord/actions/UserProfileModalActionCreators");
 
 type WatchingProps = {
     userIds: string[];
@@ -32,12 +31,6 @@ function getUsername(user: any): string {
     return RelationshipStore.getNickname(user.id) || user.globalName || user.username;
 }
 
-function getIntlMessage(template: string, ...args: any[]): string {
-    return template.replace(/{(\d+)}/g, (match, index) => {
-        return typeof args[index] !== 'undefined' ? args[index] : match;
-    });
-}
-
 export function Watching({ userIds, guildId }: WatchingProps) {
     // Missing Users happen when UserStore.getUser(id) returns null
     // The client should automatically cache spectators, so this might not be possible but it's better to be sure just in case
@@ -47,7 +40,7 @@ export function Watching({ userIds, guildId }: WatchingProps) {
         <div className={cl("content")}>
             {userIds.length ?
                 (<>
-                    <FormTitle>{getIntlMessage("SPECTATORS", { numViewers: userIds.length })}</FormTitle>
+                    <FormTitle>{i18n.intl.format(i18n.t["BR7Tnp"], { numViewers: userIds.length })}</FormTitle>
                     <Flex direction={Flex.Direction.VERTICAL} style={{ gap: 6 }} >
                         {users.map(user => (
                             <Flex direction={Flex.Direction.HORIZONTAL} style={{ gap: 6, alignContent: "center" }} className={cl("user")} >
@@ -55,7 +48,7 @@ export function Watching({ userIds, guildId }: WatchingProps) {
                                 {getUsername(user)}
                             </Flex>
                         ))}
-                        {missingUsers > 0 && <span className={cl("more_users")}>{`+${getIntlMessage("NUM_USERS", { num: missingUsers })}`}</span>}
+                        {missingUsers > 0 && <span className={cl("more_users")}>{`+${i18n.intl.format(i18n.t["3uHFUV"], { num: missingUsers })}`}</span>}
                     </Flex>
                 </>)
                 : (<span className={cl("no_viewers")}>No spectators</span>)}
@@ -115,7 +108,7 @@ export function ScreenshareWrapper(props) {
                 {users.length ?
                     <>
                         <FormTitle tag="h3" style={{ marginTop: 8, marginBottom: 0, textTransform: "uppercase" }}>
-                            {getIntlMessage("SPECTATORS", { numViewers: userIds.length })}
+                            {i18n.intl.format(i18n.t["BR7Tnp"], { numViewers: userIds.length })}
                         </FormTitle>
                         <UserSummaryItem
                             users={users}
@@ -123,6 +116,7 @@ export function ScreenshareWrapper(props) {
                             renderIcon={false}
                             max={12}
                             showDefaultAvatarsForNullUsers
+                            showUserPopout
                             renderMoreUsers={renderMoreUsers}
                             renderUser={(user: User) => (
                                 <Clickable

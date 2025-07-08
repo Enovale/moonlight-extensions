@@ -28,6 +28,12 @@ export const webpackModules: ExtensionWebExports["webpackModules"] = {
         id: "discord/components/common/index"
       },
       {
+        id: "discord/components/common/UserSummaryItem"
+      },
+      {
+        id: "discord/actions/UserProfileModalActionCreators"
+      },
+      {
         id: "react"
       },
       {
