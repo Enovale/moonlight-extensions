@@ -7,7 +7,7 @@
     "name": "Who's Watching",
     "tagline": "A short tagline that appears below the name",
     "description": "A longer description that can **use Markdown**",
-    "authors": ["Enova"],
+    "authors": ["Fres", "Enova"],
     "source": "https://github.com/Enovale/moonlight-extensions"
   }
 }
