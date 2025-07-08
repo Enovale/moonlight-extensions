@@ -116,12 +116,11 @@ export function ScreenshareWrapper(props) {
                             renderIcon={false}
                             max={12}
                             showDefaultAvatarsForNullUsers
-                            showUserPopout
                             renderMoreUsers={renderMoreUsers}
                             renderUser={(user: User) => (
                                 <Clickable
                                     className={AvatarStyles.clickableAvatar}
-                                    onClick={() => openUserProfileModal(user.id)}
+                                    onClick={() => openUserProfileModal({ userId: user.id })}
                                 >
                                     <img
                                         className={AvatarStyles.avatar}
