@@ -5,8 +5,8 @@
   "apiLevel": 2,
   "meta": {
     "name": "Who's Watching",
-    "tagline": "A short tagline that appears below the name",
-    "description": "A longer description that can **use Markdown**",
+    "tagline": "Hover over the screenshare icon to view what users are watching your stream",
+    "description": "Ported from [this UserPlugin](https://github.com/fres621/vencord-whos-watching).",
     "authors": ["Fres", "Enova"],
     "source": "https://github.com/Enovale/moonlight-extensions"
   }
