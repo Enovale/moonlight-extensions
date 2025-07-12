@@ -1,0 +1,13 @@
+{
+  "$schema": "https://moonlight-mod.github.io/manifest.schema.json",
+  "id": "freeStickers",
+  "version": "1.0.0",
+  "apiLevel": 2,
+  "meta": {
+    "name": "Free Stickers",
+    "tagline": "Free Nitro Stickers!",
+    "description": "Based on the [Fake Nitro](https://github.com/Vendicated/Vencord/blob/main/src/plugins/fakeNitro/index.tsx) extension in Vencord.",
+    "authors": ["Enova"],
+    "source": "https://github.com/Enovale/moonlight-extensions/tree/main/src/freeStickers"
+  }
+}
