@@ -8,6 +8,6 @@
     "tagline": "Hover over the screenshare icon to view what users are watching your stream",
     "description": "Ported from [this UserPlugin](https://github.com/fres621/vencord-whos-watching).",
     "authors": ["Fres", "Enova"],
-    "source": "https://github.com/Enovale/moonlight-extensions"
+    "source": "https://github.com/Enovale/moonlight-extensions/tree/main/src/whosWatching"
   }
 }
