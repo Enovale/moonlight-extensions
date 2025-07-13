@@ -10,11 +10,7 @@ const UploadHandler = {
 	promptToUpload: spacepack.findFunctionByStrings(spacepack.findByCode(findStr)[0].exports, findStr) as Function
 }
 
-const logger = moonlight.getLogger("freeStickers/entrypoint");
-logger.info('Hello from freeStickers/entrypoint!');
-
 const natives = moonlight.getNatives("freeStickers");
-logger.info("node exports:", natives);
 
 interface Message {
 	content: string;

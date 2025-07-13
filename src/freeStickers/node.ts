@@ -40,10 +40,6 @@ interface ApngFrameData {
     playTime: number;
 }
 
-// https://moonlight-mod.github.io/ext-dev/cookbook/#extension-entrypoints
-const logger = moonlightNode.getLogger("freeStickers");
-logger.info("Hello from freeStickers/Node!");
-
 module.exports = getAnimatedStickerAsGif;
 
 async function getAnimatedStickerAsGif(stickerLink: string, stickerId: string, stickerSize: number) {
