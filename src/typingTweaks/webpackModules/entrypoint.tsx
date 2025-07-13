@@ -1,4 +1,3 @@
-import { greeting } from "@moonlight-mod/wp/typingTweaks_someLibrary";
 import { GuildMemberStore, RelationshipStore } from "@moonlight-mod/wp/common_stores";
 import ErrorBoundary from "@moonlight-mod/wp/common_ErrorBoundary";
 import React from "@moonlight-mod/wp/react";
@@ -26,7 +25,7 @@ function typingUserColor(guildId: string, userId: string): string | undefined {
 
 function TypingUser({ user, guildId }: TypingUserProps) {
     return (
-        <ErrorBoundary>
+        <ErrorBoundary noop={true}>
             <strong
                 className="vc-typing-user"
                 role="button"
@@ -54,13 +53,13 @@ function TypingUser({ user, guildId }: TypingUserProps) {
 
 export function buildSeveralUsers({ a, b, count, guildId }: SeveralTypingUsersProps) {
     return (
-        <>
+        <ErrorBoundary noop={true}>
             <TypingUser user={a} guildId={guildId} />
             {", "}
             <TypingUser user={b} guildId={guildId} />
             {", "}
             and {count} others are typing...
-        </>
+        </ErrorBoundary>
     );
 }
 
@@ -83,5 +82,5 @@ export function renderTypingUsers({ guildId, users, children }: React.PropsWithC
         console.error(e);
     }
 
-    return children;
+    return <ErrorBoundary noop={true} children={children} />;
 }
