@@ -7,7 +7,6 @@ const patchFind = "StKTho,{";
 export const patches: ExtensionWebExports["patches"] = [
   {
     find: patchFind,
-    prerequisite: () => moonlight.getConfigOption<boolean>("typingTweaks", "alternativeFormatting")!,
     replace: [
       {
         // Style the indicator and add function call to modify the children before rendering
@@ -21,7 +20,7 @@ export const patches: ExtensionWebExports["patches"] = [
       },
       {
         // Adds the alternative formatting for several users typing
-        match: /(,{a:(\i),b:(\i),c:\i}\):\i\.length>3&&\(\i=)\i\.\i\.string\(\i\.\i#{intl::SEVERAL_USERS_TYPING}\)(?<=(\i)\.length.+?)/,
+        match: /(,{a:(\i),b:(\i),c:\i}\):\i\.length>3&&\(\i=)\i\.\i\.string\(\i\.\iuVDhqa\)(?<=(\i)\.length.+?)/,
         replacement: (_, rest, a, b, users) =>
           `${rest}require("typingTweaks_entrypoint").buildSeveralUsers({ a: ${a}, b: ${b}, count: ${users}.length - 2, guildId: arguments[0]?.channel?.guild_id })`
       }
@@ -33,7 +32,7 @@ export const patches: ExtensionWebExports["patches"] = [
     replace: [
       {
         // Adds the alternative formatting for several users typing
-        match: /(,{a:(\i),b:(\i),c:\i}\):\i\.length>3&&\(\i=)\i\.\i\.string\(\i\.\i#{intl::SEVERAL_USERS_TYPING}\)(?<=(\i)\.length.+?)/,
+        match: /(,{a:(\i),b:(\i),c:\i}\):\i\.length>3&&\(\i=)\i\.\i\.string\(\i\.\iuVDhqa\)(?<=(\i)\.length.+?)/,
         replacement: (_, rest, a, b, users) =>
           `${rest}require("typingTweaks_entrypoint").buildSeveralUsers({ a: ${a}, b: ${b}, count: ${users}.length - 2, guildId: arguments[0]?.channel?.guild_id })`
       }

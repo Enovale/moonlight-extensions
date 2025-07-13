@@ -18,14 +18,14 @@
       "description": "Show avatars in the typing indicator",
       "type": "boolean",
       "default": true,
-      "advice": "reload"
+      "advice": "none"
     },
     "showRoleColors": {
       "displayName": "Show Role Colors",
       "description": "Show role colors in the typing indicator",
       "type": "boolean",
       "default": true,
-      "advice": "reload"
+      "advice": "none"
     },
     "alternativeFormatting": {
       "displayName": "Alternative Formatting",
