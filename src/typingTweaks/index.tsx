@@ -46,10 +46,6 @@ export const webpackModules: ExtensionWebExports["webpackModules"] = {
   entrypoint: {
     dependencies: [
       {
-        ext: "typingTweaks",
-        id: "someLibrary"
-      },
-      {
         ext: "common",
         id: "stores"
       },
@@ -66,10 +62,6 @@ export const webpackModules: ExtensionWebExports["webpackModules"] = {
     ],
     entrypoint: true
   },
-
-  someLibrary: {
-    // Keep this object, even if it's empty! It's required for the module to be loaded.
-  }
 };
 
 export const styles: ExtensionWebExports["styles"] = [
