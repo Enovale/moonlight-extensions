@@ -1,5 +1,4 @@
 import { greeting } from "@moonlight-mod/wp/typingTweaks_someLibrary";
-import managedStyle from "./style.css?managed";
 import { GuildMemberStore, RelationshipStore } from "@moonlight-mod/wp/common_stores";
 import ErrorBoundary from "@moonlight-mod/wp/common_ErrorBoundary";
 import React from "@moonlight-mod/wp/react";
@@ -14,8 +13,15 @@ logger.info("someLibrary exports:", greeting);
 const natives = moonlight.getNatives("typingTweaks");
 logger.info("node exports:", natives);
 
-interface Props {
+interface TypingUserProps {
     user: User;
+    guildId: string;
+}
+
+interface SeveralTypingUsersProps {
+    a: User;
+    b: User;
+    count: number;
     guildId: string;
 }
 
@@ -25,7 +31,7 @@ function typingUserColor(guildId: string, userId: string): string | undefined {
     return GuildMemberStore.getMember(guildId, userId)?.colorString;
 }
 
-function typingUser({ user, guildId }: Props) {
+function TypingUser({ user, guildId }: TypingUserProps) {
     return (
         <ErrorBoundary>
             <strong
@@ -51,4 +57,38 @@ function typingUser({ user, guildId }: Props) {
             </strong>
         </ErrorBoundary>
     );
+}
+
+export function buildSeveralUsers({ a, b, count, guildId }: SeveralTypingUsersProps) {
+    return (
+        <>
+            <TypingUser user={a} guildId={guildId} />
+            {", "}
+            <TypingUser user={b} guildId={guildId} />
+            {", "}
+            and {count} others are typing...
+        </>
+    );
+}
+
+export function renderTypingUsers({ guildId, users, children }: React.PropsWithChildren<{ guildId: string, users: User[]; }>) {
+    try {
+        if (!Array.isArray(children)) {
+            return children;
+        }
+
+        let element = 0;
+
+        return children.map(c => {
+            if (c.type !== "strong" && !(typeof c !== "string" && !React.isValidElement(c)))
+                return c;
+
+            const user = users[element++];
+            return <TypingUser key={user.id} guildId={guildId} user={user} />;
+        });
+    } catch (e) {
+        console.error(e);
+    }
+
+    return children;
 }
