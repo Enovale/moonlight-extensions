@@ -6,13 +6,6 @@ import { User } from "@moonlight-mod/types";
 import { Avatar } from "@moonlight-mod/wp/discord/components/common/index";
 import { openUserProfileModal } from "@moonlight-mod/wp/discord/actions/UserProfileModalActionCreators";
 
-const logger = moonlight.getLogger("typingTweaks/entrypoint");
-logger.info("Hello from entrypoint!");
-logger.info("someLibrary exports:", greeting);
-
-const natives = moonlight.getNatives("typingTweaks");
-logger.info("node exports:", natives);
-
 interface TypingUserProps {
     user: User;
     guildId: string;
