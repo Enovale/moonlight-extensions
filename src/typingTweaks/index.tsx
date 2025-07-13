@@ -37,6 +37,15 @@ export const patches: ExtensionWebExports["patches"] = [
           `${rest}require("typingTweaks_entrypoint").buildSeveralUsers({ a: ${a}, b: ${b}, count: ${users}.length - 2, guildId: arguments[0]?.channel?.guild_id })`
       }
     ]
+  },
+  // https://github.com/Equicord/Equicord/blob/main/src/equicordplugins/amITyping/index.ts
+  {
+    find: `"handleDismissInviteEducation"`,
+    prerequisite: () => moonlight.getConfigOption<boolean>("typingTweaks", "showSelfTyping")!,
+    replace: {
+      match: /\i\.default\.getCurrentUser\(\)/,
+      replacement: `""`
+    }
   }
 ];
 

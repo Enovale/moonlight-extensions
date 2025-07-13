@@ -1,13 +1,13 @@
 {
   "$schema": "https://moonlight-mod.github.io/manifest.schema.json",
   "id": "typingTweaks",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "apiLevel": 2,
   "meta": {
     "name": "Typing Tweaks",
     "tagline": "Show avatars and role colours in the typing indicator",
-    "description": "Ported from [this Vencord plugin](https://github.com/Vendicated/Vencord/tree/main/src/plugins/typingTweaks)",
-    "authors": ["zt", "Enova"],
+    "description": "Ported from [this](https://github.com/Vendicated/Vencord/tree/main/src/plugins/typingTweaks) and [this](https://github.com/Equicord/Equicord/blob/main/src/equicordplugins/amITyping/) Vencord plugin",
+    "authors": ["zt", "MrDiamond", "Enova"],
     "donate": "https://ko-fi.com/enovale",
     "source": "https://github.com/Enovale/moonlight-extensions/tree/main/src/typingTweaks"
   },
@@ -32,6 +32,13 @@
       "description": "Show a more useful message when several users are typing",
       "type": "boolean",
       "default": true,
+      "advice": "reload"
+    },
+    "showSelfTyping": {
+      "displayName": "Show Yourself Typing",
+      "description": "Display when you are typing along with all other typing users",
+      "type": "boolean",
+      "default": false,
       "advice": "reload"
     }
   }
