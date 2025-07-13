@@ -32,7 +32,7 @@ export const patches: ExtensionWebExports["patches"] = [
     replace: [
       {
         // Adds the alternative formatting for several users typing
-        match: /(,{a:(\i),b:(\i),c:\i}\):\i\.length>3&&\(\i=)\i\.\i\.string\(\i\.\iuVDhqa\)(?<=(\i)\.length.+?)/,
+        match: /(,{a:(\i),b:(\i),c:\i}\):\i\.length>3&&\(\i=)\i\.\i\.string\(\i\.\i\.uVDhqa\)(?<=(\i)\.length.+?)/,
         replacement: (_, rest, a, b, users) =>
           `${rest}require("typingTweaks_entrypoint").buildSeveralUsers({ a: ${a}, b: ${b}, count: ${users}.length - 2, guildId: arguments[0]?.channel?.guild_id })`
       }
