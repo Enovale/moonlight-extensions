@@ -1,0 +1,37 @@
+{
+  "$schema": "https://moonlight-mod.github.io/manifest.schema.json",
+  "id": "typingTweaks",
+  "version": "1.0.0",
+  "apiLevel": 2,
+  "meta": {
+    "name": "Typing Tweaks",
+    "tagline": "A short tagline that appears below the name",
+    "description": "A longer description that can **use Markdown**",
+    "authors": ["Enova"],
+    "source": "https://example.com/"
+  },
+  "dependencies": ["spacepack", "common"],
+  "settings": {
+    "showAvatars": {
+      "displayName": "Show Avatars",
+      "description": "Show avatars in the typing indicator",
+      "type": "boolean",
+      "default": true,
+      "advice": "reload"
+    },
+    "showRoleColors": {
+      "displayName": "Show Role Colors",
+      "description": "Show role colors in the typing indicator",
+      "type": "boolean",
+      "default": true,
+      "advice": "reload"
+    },
+    "alternativeFormatting": {
+      "displayName": "Alternative Formatting",
+      "description": "Show a more useful message when several users are typing",
+      "type": "boolean",
+      "default": true,
+      "advice": "reload"
+    }
+  }
+}
