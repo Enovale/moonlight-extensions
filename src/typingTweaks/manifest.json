@@ -5,10 +5,11 @@
   "apiLevel": 2,
   "meta": {
     "name": "Typing Tweaks",
-    "tagline": "A short tagline that appears below the name",
-    "description": "A longer description that can **use Markdown**",
-    "authors": ["Enova"],
-    "source": "https://example.com/"
+    "tagline": "Show avatars and role colours in the typing indicator",
+    "description": "Ported from [this Vencord plugin](https://github.com/Vendicated/Vencord/tree/main/src/plugins/typingTweaks)",
+    "authors": ["zt", "Enova"],
+    "donate": "https://ko-fi.com/enovale",
+    "source": "https://github.com/Enovale/moonlight-extensions/tree/main/src/typingTweaks"
   },
   "dependencies": ["spacepack", "common"],
   "settings": {
