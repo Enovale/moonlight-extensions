@@ -3,6 +3,7 @@
   "id": "removeTopBar",
   "version": "1.0.1",
   "apiLevel": 2,
+  "environment": "desktop",
   "meta": {
     "name": "Remove Title Bar",
     "tagline": "Removes the Title Bar and moves the related buttons to other places so they are still accessible.",
