@@ -1,7 +1,7 @@
 {
   "$schema": "https://moonlight-mod.github.io/manifest.schema.json",
   "id": "typingTweaks",
-  "version": "1.0.2",
+  "version": "1.0.4",
   "apiLevel": 2,
   "meta": {
     "name": "Typing Tweaks",
@@ -9,20 +9,14 @@
     "description": "Ported from [this](https://github.com/Vendicated/Vencord/tree/main/src/plugins/typingTweaks) and [this](https://github.com/Equicord/Equicord/blob/main/src/equicordplugins/amITyping/) Vencord plugin",
     "authors": ["zt", "MrDiamond", "Enova"],
     "donate": "https://ko-fi.com/enovale",
-    "source": "https://github.com/Enovale/moonlight-extensions/tree/main/src/typingTweaks"
+    "source": "https://github.com/Enovale/moonlight-extensions/tree/main/src/typingTweaks",
+    "tags": ["qol", "chat"]
   },
   "dependencies": ["spacepack", "common"],
   "settings": {
     "showAvatars": {
       "displayName": "Show Avatars",
       "description": "Show avatars in the typing indicator",
-      "type": "boolean",
-      "default": true,
-      "advice": "none"
-    },
-    "showRoleColors": {
-      "displayName": "Show Role Colors",
-      "description": "Show role colors in the typing indicator",
       "type": "boolean",
       "default": true,
       "advice": "none"
