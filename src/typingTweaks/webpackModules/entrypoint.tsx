@@ -17,9 +17,11 @@ interface SeveralTypingUsersProps {
     guildId: string;
 }
 
-function typingUserColor(guildId: string, userId: string): string | undefined {
-    if (!moonlight.getConfigOption<boolean>("typingTweaks", "showRoleColors")) return;
+function showRoleColors() {
+    return moonlight.getConfigOption<boolean>("colorConsistency", "typing") ?? false;
+}
 
+function typingUserColor(guildId: string, userId: string): string | undefined {
     return GuildMemberStore.getMember(guildId, userId)?.colorString;
 }
 
@@ -33,7 +35,7 @@ function TypingUser({ user, guildId }: TypingUserProps) {
                     openUserProfileModal(user.id);
                 }}
                 style={{
-                    color: moonlight.getConfigOption<boolean>("typingTweaks", "showRoleColors") ? typingUserColor(guildId, user.id) : undefined,
+                    color: showRoleColors() ? typingUserColor(guildId, user.id) : undefined,
                 }}
             >
                 {moonlight.getConfigOption<boolean>("typingTweaks", "showAvatars") && (
