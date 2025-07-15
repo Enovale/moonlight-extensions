@@ -16,7 +16,6 @@ export const webpackModules: ExtensionWebExports["webpackModules"] = {
   entrypoint: {
     dependencies: [
       { ext: "spacepack", id: "spacepack" },
-      { ext: "moonbase", id: "moonbase" },
     ],
     entrypoint: true
   }
