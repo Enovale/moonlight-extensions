@@ -1,22 +1,18 @@
 {
   "$schema": "https://moonlight-mod.github.io/manifest.schema.json",
   "id": "usrbg",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "apiLevel": 2,
   "meta": {
     "name": "USRBG",
     "tagline": "Displays user banners from USRBG, allowing anyone to get a banner without Nitro",
-    "description": "Ported from [this Vencord plugin](https://github.com/Vendicated/Vencord/tree/main/src/plugins/usrbg)",
+    "description": "[CLICK HERE TO GET YOUR OWN BANNER](https://github.com/AutumnVN/usrbg#how-to-request-your-own-usrbg-banner)\n\nPorted from [this Vencord plugin](https://github.com/Vendicated/Vencord/tree/main/src/plugins/usrbg)",
     "authors": ["AutumnVN", "katlyn", "pylix", "TheKodeToad", "Enovale"],
     "donate": "https://ko-fi.com/enovale",
     "source": "https://github.com/Enovale/moonlight-extensions/tree/main/src/usrbg"
   },
-  "dependencies": ["spacepack", "moonbase"],
+  "dependencies": ["spacepack"],
   "settings": {
-    "ctaBanner": {
-      "type": "custom",
-      "advice": "none"
-    },
     "baseUrl": {
       "displayName": "Base URL",
       "type": "string",
