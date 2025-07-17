@@ -1,5 +1,4 @@
 import { ExtensionWebExports } from "@moonlight-mod/types";
-import { inboxFind, bugFind } from "./webpackModules/finds";
 
 const mainToolbarFind = "toolbar:function";
 const guildsFind = "guildsnav";
@@ -26,7 +25,7 @@ export const patches: ExtensionWebExports["patches"] = [
   {
     find: mainToolbarFind,
     replace: {
-      match: /(function \i\(\i\){)(.{1,200}toolbar.{1,450}mobileToolbar)/,
+      match: /(function \i\(\i\){)(.*?toolbar.*?mobileToolbar)/,
       replacement: (_, before, after) => `${before}require("removeTopBar_entrypoint").addIconToToolBar(arguments[0]);${after}`
     }
   },
@@ -34,8 +33,8 @@ export const patches: ExtensionWebExports["patches"] = [
   {
     find: callToolbarFind,
     replace: {
-      match: /(\i)=\[\]/,
-      replacement: (_, varName) => `${varName} = [require("removeTopBar_entrypoint").getIcons()]`
+      match: /(ChannelCallHeaderToolbar.+?)(\i)=\[\]/,
+      replacement: (_, before, varName) => `${before}${varName} = [require("removeTopBar_entrypoint").getIcons()]`
     }
   }
 ];
@@ -66,8 +65,8 @@ export const webpackModules: ExtensionWebExports["webpackModules"] = {
       guildsFind,
       titleBarFind,
       callToolbarFind,
-      inboxFind,
-      bugFind
+      `.getUnseenInviteCount${""}()>0)`,
+      'navId:"staff-help-popout"'
     ],
     entrypoint: true
   }
