@@ -1,4 +1,5 @@
 import { ExtensionWebExports } from "@moonlight-mod/types";
+import style from "./style.css";
 
 const mainToolbarFind = "toolbar:function";
 const guildsFind = "guildsnav";
@@ -38,7 +39,7 @@ export const patches: ExtensionWebExports["patches"] = [
     find: callToolbarFind,
     replace: {
       match: /(?<=value:\i,children:)(\i)}/,
-      replacement: (_, buttons) => `[...${buttons},require("removeTopBar_entrypoint").getIcons()]}`
+      replacement: (_, buttons) => `[require("removeTopBar_entrypoint").getIcons(),...${buttons}]}`
     }
   }
 ];
@@ -73,3 +74,7 @@ export const webpackModules: ExtensionWebExports["webpackModules"] = {
     entrypoint: true
   }
 };
+
+export const styles: ExtensionWebExports["styles"] = [
+  style
+];

@@ -1,5 +1,5 @@
 import { ExtensionWebExports } from "@moonlight-mod/types";
-import managedStyle from "./style.css?managed";
+import style from "./style.css";
 
 const patchFind = "StKTho,{";
 
@@ -73,5 +73,5 @@ export const webpackModules: ExtensionWebExports["webpackModules"] = {
 };
 
 export const styles: ExtensionWebExports["styles"] = [
-  managedStyle
+  style
 ];
