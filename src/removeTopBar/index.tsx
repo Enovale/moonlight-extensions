@@ -3,38 +3,42 @@ import { ExtensionWebExports } from "@moonlight-mod/types";
 const mainToolbarFind = "toolbar:function";
 const guildsFind = "guildsnav";
 const titleBarFind = "TITLE_BAR_LEFT&&";
-const callToolbarFind = 'call-members-popout';
+const callToolbarFind = "call-members-popout";
 
 // https://moonlight-mod.github.io/ext-dev/webpack/#patching
 export const patches: ExtensionWebExports["patches"] = [
+  // Hide titlebar and extract buttons
   {
     find: titleBarFind,
     replace: {
-      match: /return \i\?null:\(/,
-      replacement: "return true ? null : ("
+      match: /return \i\?null:\((?=.+?trailing:\(0,\i\.jsxs\)\(\i\.Fragment,{children:(\[.+?]))/,
+      replacement: (_, buttons) => `require("removeTopBar_entrypoint").storeButtons(${buttons});return true ? null : (`
     }
   },
+
   // Adjust margins for removed title bar
   {
     find: guildsFind,
     replace: {
       match: /className:\i\.itemsContainer,/,
-      replacement: (orig: any) => `${orig}style: {marginTop: "16px"},`
+      replacement: (orig: string) => `${orig}style: {marginTop: "var(--space-8)"},`
     }
   },
+
+  // Add buttons
   {
     find: mainToolbarFind,
     replace: {
-      match: /(function \i\(\i\){)(.*?toolbar.*?mobileToolbar)/,
-      replacement: (_, before, after) => `${before}require("removeTopBar_entrypoint").addIconToToolBar(arguments[0]);${after}`
+      match: /\.toggleParticipantsList\(\i,!\i\)}\)]}\)/,
+      replacement: (orig: string) => `${orig},require("removeTopBar_entrypoint").getIcons()`
     }
   },
   // Add icons to voice chat toolbar
   {
     find: callToolbarFind,
     replace: {
-      match: /(ChannelCallHeaderToolbar.+?)(\i)=\[\]/,
-      replacement: (_, before, varName) => `${before}${varName} = [require("removeTopBar_entrypoint").getIcons()]`
+      match: /(?<=value:\i,children:)(\i)}/,
+      replacement: (_, buttons) => `[...${buttons},require("removeTopBar_entrypoint").getIcons()]}`
     }
   }
 ];
@@ -64,9 +68,7 @@ export const webpackModules: ExtensionWebExports["webpackModules"] = {
       mainToolbarFind,
       guildsFind,
       titleBarFind,
-      callToolbarFind,
-      `.getUnseenInviteCount${""}()>0)`,
-      'navId:"staff-help-popout"'
+      callToolbarFind
     ],
     entrypoint: true
   }
