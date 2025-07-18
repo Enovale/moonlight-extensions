@@ -1,9 +1,8 @@
 {
   "$schema": "https://moonlight-mod.github.io/manifest.schema.json",
   "id": "removeTopBar",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "apiLevel": 2,
-  "environment": "desktop",
   "meta": {
     "name": "Remove Title Bar",
     "tagline": "Removes the Title Bar and moves the related buttons to other places so they are still accessible.",
@@ -11,7 +10,8 @@
     "authors": ["Enovale"],
     "donate": "https://ko-fi.com/enovale",
     "source": "https://github.com/Enovale/moonlight-extensions/tree/main/src/removeTopBar",
-    "tags": ["appearance", "development"]
+    "tags": ["appearance", "development"],
+    "changelog": "Rework logic to capture all buttons from the titlebar"
   },
   "settings": {
     "moveButtons": {
