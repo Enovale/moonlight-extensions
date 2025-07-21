@@ -1,5 +1,4 @@
 import { ExtensionWebExports } from "@moonlight-mod/types";
-import style from "./style.css";
 
 const patchFind = "StKTho,{";
 
@@ -71,7 +70,3 @@ export const webpackModules: ExtensionWebExports["webpackModules"] = {
     entrypoint: true
   },
 };
-
-export const styles: ExtensionWebExports["styles"] = [
-  style
-];

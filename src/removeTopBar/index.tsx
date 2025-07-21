@@ -1,5 +1,4 @@
 import { ExtensionWebExports } from "@moonlight-mod/types";
-import style from "./style.css";
 
 const mainToolbarFind = "toolbar:function";
 const guildsFind = "guildsnav";
@@ -74,7 +73,3 @@ export const webpackModules: ExtensionWebExports["webpackModules"] = {
     entrypoint: true
   }
 };
-
-export const styles: ExtensionWebExports["styles"] = [
-  style
-];
