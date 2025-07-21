@@ -7,3 +7,4 @@ All my moonlight extensions. They are largely ports of vencord plugins/userplugi
 # [Free Stickers](./src/freeStickers/README.md)
 # [Typing Tweaks](./src/typingTweaks/README.md)
 # [Remove Title Bar](./src/removeTopBar/README.md)
+# [No Nitro Upsell](./src/noNitroUpsell/README.md)

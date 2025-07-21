@@ -1,0 +1,16 @@
+{
+  "$schema": "https://moonlight-mod.github.io/manifest.schema.json",
+  "id": "noNitroUpsell",
+  "version": "1.0.0",
+  "apiLevel": 2,
+  "meta": {
+    "name": "No Nitro Upsell",
+    "tagline": "Removes ALL of Discord's nitro upsells by tricking the client into thinking you have nitro.",
+    "description": "Ported from [this Equicord Plugin](https://github.com/Equicord/Equicord/blob/main/src/equicordplugins/noNitroUpsell/index.ts).\n\nIssues can arise from this patch including:\n\n- Gifts will appear to be collectable but will just throw errors.\n- Soundboard sounds that you shouldn't be able to play will play locally but cannot be heard by others",
+    "authors": ["thororen", "Enova"],
+    "donate": "https://ko-fi.com/enovale",
+    "source": "https://github.com/Enovale/moonlight-extensions/tree/main/src/noNitroUpsell",
+    "tags": ["dangerZone", "qol"]
+  },
+  "dependencies": ["spacepack", "common"]
+}
