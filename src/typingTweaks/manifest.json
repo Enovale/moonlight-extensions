@@ -1,7 +1,7 @@
 {
   "$schema": "https://moonlight-mod.github.io/manifest.schema.json",
   "id": "typingTweaks",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "apiLevel": 2,
   "meta": {
     "name": "Typing Tweaks",
@@ -10,7 +10,8 @@
     "authors": ["zt", "MrDiamond", "Enova"],
     "donate": "https://ko-fi.com/enovale",
     "source": "https://github.com/Enovale/moonlight-extensions/tree/main/src/typingTweaks",
-    "tags": ["qol", "chat"]
+    "tags": ["qol", "chat"],
+    "changelog": "Fixed erronious style tag"
   },
   "dependencies": ["spacepack", "common"],
   "settings": {
