@@ -1,0 +1,46 @@
+{
+  "$schema": "https://moonlight-mod.github.io/manifest.schema.json",
+  "id": "noProfileThemes",
+  "version": "1.1.0",
+  "apiLevel": 2,
+  "meta": {
+    "name": "No Profile Themes",
+    "tagline": "Removes all discord nitro customizations from users besides yourself.",
+    "description": "Ported and updated heavily from [this Vencord Plugin](https://github.com/Vencord/Vencord/blob/main/src/plugins/noProfileThemes/index.ts).",
+    "authors": ["TheKodeToad", "Enova"],
+    "donate": "https://ko-fi.com/enovale",
+    "source": "https://github.com/Enovale/moonlight-extensions/tree/main/src/noProfileThemes",
+    "tags": ["qol", "profiles"]
+  },
+  "dependencies": ["common"],
+  "settings": {
+    "premiumProfile": {
+      "displayName": "Remove Profile Themes",
+      "description": "Primary and Accent color are removed",
+      "type": "boolean",
+      "default": true,
+      "advice": "none"
+    },
+    "profileEffect": {
+      "displayName": "Remove Profile Effect",
+      "description": "",
+      "type": "boolean",
+      "default": true,
+      "advice": "none"
+    },
+    "nameplate": {
+      "displayName": "Remove Nameplate",
+      "description": "Custom nameplates are removed",
+      "type": "boolean",
+      "default": true,
+      "advice": "none"
+    },
+    "profileDecoration": {
+      "displayName": "Remove Profile Decoration",
+      "description": "",
+      "type": "boolean",
+      "default": true,
+      "advice": "none"
+    }
+  }
+}
