@@ -53,12 +53,13 @@ export const patches: ExtensionWebExports["patches"] = [
     }
   },
   // Special exception to this patch for the entitlement gifts, as they are server validated
+  // TODO This patch is broken on Canary
   {
     find: "EntitlementGifts",
     replace:
     {
       match: /\(\)=>(\i\.\i\.isPremiumExactly\((\i\..*?User\(\)).*?TIER_2\))/,
-      replacement: (_, origCheck, user) => `() => require("noNitroUpsell_entrypoint").checkRealSkuSupport("canAcceptGifts", ${user}, ${origCheck})`
+      replacement: (_, origCheck, user) => `() => require("noNitroUpsell_entrypoint").checkRealSkuSupport("canAcceptGifts", ${user}, (${origCheck}))`
     }
   },
   // Removes the collectibles upsell in the Profiles tab
@@ -79,7 +80,8 @@ export const webpackModules: ExtensionWebExports["webpackModules"] = {
       {
         ext: "common",
         id: "stores"
-      }
+      },
+      "EntitlementGifts"
     ],
     entrypoint: true
   },

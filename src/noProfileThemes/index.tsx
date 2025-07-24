@@ -20,17 +20,17 @@ export const patches: ExtensionWebExports["patches"] = [
   {
     find: "discord/records/UserRecord",
     replace: [
-  // Remove all nameplates
+      // Remove all nameplates
       {
-      match: /get nameplate\(\){/,
-      replacement: (orig) => `${orig}if (!require("noProfileThemes_entrypoint").themeEffectAllowed("nameplate", this.id)) return null;`
-    },
-    // Remove Avatar Decorations
-    {
-      match: /get avatarDecoration\(\){/,
-      replacement: (orig) => `${orig}if (!require("noProfileThemes_entrypoint").themeEffectAllowed("profileDecoration", this.id)) return null;`
-    }
-  ]
+        match: /get nameplate\(\){/,
+        replacement: (orig) => `${orig}if (!require("noProfileThemes_entrypoint").themeEffectAllowed("nameplate", this.id)) return null;`
+      },
+      // Remove Avatar Decorations
+      {
+        match: /get avatarDecoration\(\){/,
+        replacement: (orig) => `${orig}if (!require("noProfileThemes_entrypoint").themeEffectAllowed("profileDecoration", this.id)) return null;`
+      }
+    ]
   }
 ];
 
