@@ -5,7 +5,7 @@
   "apiLevel": 2,
   "meta": {
     "name": "No Profile Themes",
-    "tagline": "Removes all discord nitro customizations from users besides yourself.",
+    "tagline": "Removes all Discord nitro customizations from users besides yourself.",
     "description": "Ported and updated heavily from [this Vencord Plugin](https://github.com/Vencord/Vencord/blob/main/src/plugins/noProfileThemes/index.ts).",
     "authors": ["TheKodeToad", "Enova"],
     "donate": "https://ko-fi.com/enovale",
@@ -23,7 +23,7 @@
     },
     "profileEffect": {
       "displayName": "Remove Profile Effect",
-      "description": "",
+      "description": "Custom effects on user popout are removed",
       "type": "boolean",
       "default": true,
       "advice": "none"
@@ -37,7 +37,7 @@
     },
     "profileDecoration": {
       "displayName": "Remove Profile Decoration",
-      "description": "",
+      "description": "Decor Plugin decorations will still appear",
       "type": "boolean",
       "default": true,
       "advice": "none"

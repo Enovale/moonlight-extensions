@@ -27,7 +27,10 @@ function classes(...classes: Array<string | null | undefined | false>) {
     return classes.filter(Boolean).join(" ");
 }
 
-function getUsername(user: any, guildId?: string): string {
+function getUsername(user?: User, guildId?: string): string {
+    if (!user)
+        return "";
+    
     return RelationshipStore.getNickname(user.id) || guildId != null ? GuildMemberStore.getNick(guildId, user.id) : (user.globalName || user.username);
 }
 
@@ -119,7 +122,7 @@ export function ScreenshareWrapper(props) {
                             showDefaultAvatarsForNullUsers
                             renderMoreUsers={renderMoreUsers}
                             renderUser={(user: User) => (
-                                <Tooltip text={getUsername(stream.guildId, user.id)}>
+                                <Tooltip text={getUsername(user, stream.guildId)}>
                                     {({ onMouseEnter, onMouseLeave }) => (
                                         <div
                                             className={cl("user_summary_icon")}

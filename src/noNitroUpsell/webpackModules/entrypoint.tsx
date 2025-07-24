@@ -17,9 +17,9 @@ let exemptSkuFeatures = [
   "freeBoosts",
 ];
 
-export function checkRealSkuSupport(feature, user, originalValue) {
-  if (feature === "canAcceptGifts") { // Special magic value defined by a patch
-    return user._realPremiumType == 2;
+export function checkRealSkuSupport(feature, user: ModifiedUser, originalValue: Boolean): Boolean {
+  if (feature == "canAcceptGifts") { // Special magic value defined by a patch
+    return user != null && user._realPremiumType == 2;
   }
 
   if (exemptSkuFeatures.includes(feature.name)) {
