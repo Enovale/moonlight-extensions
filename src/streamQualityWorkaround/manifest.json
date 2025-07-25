@@ -1,0 +1,15 @@
+{
+  "$schema": "https://moonlight-mod.github.io/manifest.schema.json",
+  "id": "streamQualityWorkaround",
+  "version": "1.0.0",
+  "apiLevel": 2,
+  "meta": {
+    "name": "Stream Quality Workaround",
+    "tagline": "Changes the quality of your stream periodically to bypass a low-quality stream bug",
+    "description": "A longer description that can **use Markdown**",
+    "authors": ["Enovale"],
+    "donate": "https://ko-fi.com/enovale",
+    "source": "https://github.com/Enovale/moonlight-extensions/tree/main/src/streamQualityWorkaround",
+    "tags": ["fixes", "voice"]
+  }
+}
