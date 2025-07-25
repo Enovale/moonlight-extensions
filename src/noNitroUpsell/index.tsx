@@ -2,7 +2,7 @@ import { ExtensionWebExports } from "@moonlight-mod/types";
 
 // https://moonlight-mod.github.io/ext-dev/webpack/#patching
 export const patches: ExtensionWebExports["patches"] = [
-  // I don't actually know what this is patching out
+  // Remove upsell on opening your open profile popout
   {
     find: ".EIYbj4)", // USER_PROFILE_ENTRY_POINTS_AMP_UP_YOUR_PROFILE
     replace:
