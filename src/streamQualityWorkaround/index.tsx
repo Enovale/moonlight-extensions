@@ -22,15 +22,10 @@ export const patches: ExtensionWebExports["patches"] = [
 export const webpackModules: ExtensionWebExports["webpackModules"] = {
   entrypoint: {
     dependencies: [
-      {
-        ext: "spacepack",
-        id: "spacepack"
-      },
-      {
-        ext: "common",
-        id: "stores"
-      },
+      { ext: "spacepack", id: "spacepack" },
+      { ext: "common", id: "stores"},
       { id: "discord/components/common/PanelButton" },
+      { id: "react" },
       "bwLimitedFrameRate"
     ],
     entrypoint: true

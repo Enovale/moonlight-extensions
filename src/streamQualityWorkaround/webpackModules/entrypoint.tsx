@@ -50,9 +50,11 @@ export function StreamStatsUpdate(e) {
             let currentScore = videoStats.resolution.width * videoStats.resolution.height;
             let targetScore = GetExpectedScore();
             let ratio = currentScore / targetScore;
-            logger.info("Current Stream Ratio: ", ratio);
-            if (ratio < GetMinimumRatio())
+            logger.debug("Current Stream Ratio: ", ratio);
+            if (ratio < GetMinimumRatio()) {
+                logger.info("Stream fix is needed, Current Score: ", currentScore, " Target Score: ", targetScore, " Ratio: ", ratio);
                 FixStreamQuality();
+            }
         }
     }
 }
@@ -88,5 +90,3 @@ export default function FixStreamQuality() {
         AudioActionCreators.setGoLiveSource(e);
     }
 }
-
-window.fixStreamQuality = FixStreamQuality;
