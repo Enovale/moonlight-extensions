@@ -2,11 +2,12 @@ import { ExtensionWebExports } from "@moonlight-mod/types";
 
 // https://moonlight-mod.github.io/ext-dev/webpack/#patching
 export const patches: ExtensionWebExports["patches"] = [
+  // Prevent orbs videos from rendering
   {
-    find: /"User Settings",/g,
+    find: "[QV] | updatePlayerState | playerState:",
     replace: {
-      match: /"User Settings",/g,
-      replacement: '"hacked by orbsAutomation lol",'
+      match: /videoInner.*?\}\),/,
+      replacement: (orig) => `${orig}style: {display: 'none'},`
     }
   }
 ];
