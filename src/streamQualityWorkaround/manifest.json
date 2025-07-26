@@ -11,5 +11,16 @@
     "donate": "https://ko-fi.com/enovale",
     "source": "https://github.com/Enovale/moonlight-extensions/tree/main/src/streamQualityWorkaround",
     "tags": ["fixes", "voice"]
+  },
+  "settings": {
+    "resolutionRatio": {
+      "displayName": "Aggressiveness",
+      "description": "When to force a reset on the stream based on the expected to actual quality ratio",
+      "type": "number",
+      "default": 50,
+      "min": 0,
+      "max": 100,
+      "advice": "none"
+    }
   }
 }
