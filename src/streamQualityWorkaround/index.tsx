@@ -8,6 +8,20 @@ export const patches: ExtensionWebExports["patches"] = [
       match: /JSON\.parse.*?(\i)=\[\];.*?let\{screenshare:\i,camera:\i,audioDevice:\i\}=\i;/,
       replacement: (orig, rtpOut) => `${orig}require("streamQualityWorkaround_entrypoint").StreamStatsUpdate(${rtpOut});`
     }
+  },
+  {
+    find: "this.renderEmbeddedActivity()",
+    replace: {
+      match: /(renderActions\(\).*?\i\()\{\}/,
+      replacement: (orig, before) => `${before}require("streamQualityWorkaround_entrypoint").TestChild()`
+    }
+  },
+  {
+    find: "Send Join Invite",
+    replace: {
+      match: /(panelButtonContainer)(,children:)(\(.*?icon:\i\}\))/,
+      replacement: (orig, css, before, after) => `${css} + " streamQuality-interact"${before}[require("streamQualityWorkaround_entrypoint").TestChild(),${after}]`
+    }
   }
 ];
 
@@ -23,6 +37,7 @@ export const webpackModules: ExtensionWebExports["webpackModules"] = {
         ext: "common",
         id: "stores"
       },
+      { id: "discord/components/common/PanelButton" },
       "bwLimitedFrameRate"
     ],
     entrypoint: true

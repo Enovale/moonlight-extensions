@@ -5,8 +5,8 @@
   "apiLevel": 2,
   "meta": {
     "name": "Stream Quality Workaround",
-    "tagline": "Changes the quality of your stream periodically to bypass a low-quality stream bug",
-    "description": "A longer description that can **use Markdown**",
+    "tagline": "Automatically restarts your stream when it starts getting limited by bitrate",
+    "description": "This plugin automatically watches the current quality of your screenshare, and if it dips far enough below your preset quality, it will restart it, making the stream high-quality temporarily.\n\nThe 'Aggressiveness' in the settings refers to the difference between the pixel count of your intended resolution vs the actual resolution of the current stream.\n\nSo e.g.  \nIntended stream quality: (`1280 x 1440` = `1843200`)  \nReal stream quality: (`448` x `504` = `225792`)  \nQuality Ratio (`225792` / `1843200`): `0.1225`, *stream needs to be reset*",
     "authors": ["Enovale"],
     "donate": "https://ko-fi.com/enovale",
     "source": "https://github.com/Enovale/moonlight-extensions/tree/main/src/streamQualityWorkaround",

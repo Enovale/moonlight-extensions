@@ -1,0 +1,9 @@
+.streamQuality-interact {
+  display: flex;
+  align-items: center;
+  width: unset !important;
+
+  flex-grow: 0;
+  flex-shrink: 1;
+  flex-basis: auto;
+}
