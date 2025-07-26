@@ -22,7 +22,7 @@ interface QualityOptions {
     frameRate: number;
 }
 
-export function TestChild(children) {
+export function ActionsWrapper() {
     return (
         <PanelButton icon={ScreenIcon} tooltipText="Reset Stream Quality" onClick={() => FixStreamQuality()} />
     );

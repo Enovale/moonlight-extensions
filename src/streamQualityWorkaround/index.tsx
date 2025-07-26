@@ -10,17 +10,10 @@ export const patches: ExtensionWebExports["patches"] = [
     }
   },
   {
-    find: "this.renderEmbeddedActivity()",
-    replace: {
-      match: /(renderActions\(\).*?\i\()\{\}/,
-      replacement: (orig, before) => `${before}require("streamQualityWorkaround_entrypoint").TestChild()`
-    }
-  },
-  {
     find: "Send Join Invite",
     replace: {
       match: /(panelButtonContainer)(,children:)(\(.*?icon:\i\}\))/,
-      replacement: (orig, css, before, after) => `${css} + " streamQuality-interact"${before}[require("streamQualityWorkaround_entrypoint").TestChild(),${after}]`
+      replacement: (orig, css, before, after) => `${css} + " streamQuality-interact"${before}[require("streamQualityWorkaround_entrypoint").ActionsWrapper(),${after}]`
     }
   }
 ];
