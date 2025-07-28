@@ -28,6 +28,5 @@ export const webpackModules: ExtensionWebExports["webpackModules"] = {
       { id: "react" },
       "bwLimitedFrameRate"
     ],
-    entrypoint: true
   },
 };
