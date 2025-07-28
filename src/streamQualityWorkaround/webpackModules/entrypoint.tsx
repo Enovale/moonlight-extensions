@@ -24,7 +24,7 @@ interface QualityOptions {
 
 export function ActionsWrapper() {
     return (
-        <PanelButton icon={ScreenIcon} tooltipText="Reset Stream Quality" onClick={() => FixStreamQuality()} />
+        <PanelButton className="streamQualityWorkaround-refresh" icon={ScreenIcon} tooltipText="Reset Stream Quality" onClick={() => FixStreamQuality()} />
     );
 }
 
