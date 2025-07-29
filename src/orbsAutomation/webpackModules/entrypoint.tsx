@@ -20,14 +20,20 @@ const logger = moonlight.getLogger("orbsAutomation/entrypoint");
 let isApp = !moonlightNode.isBrowser;
 let currentlyCompletingQuest = false;
 
-export function SpoofButton(quest, existing: any | undefined) {
+interface SpoofButtonProps {
+    quest: any,
+    existing: React.JSX.Element | undefined,
+    callback: Function
+}
+
+export function SpoofButton({ quest, existing, callback }: SpoofButtonProps) {
     let button;
     if (QuestNeedsCompleting(quest))
         button = (
             <PanelButton className="orbsAutomation-spoof"
                 tooltipText="Spoof Quest"
                 icon={ScienceIcon}
-                onClick={() => CompleteQuest(quest)} />
+                onClick={() => { callback?.(); CompleteQuest(quest); }} />
         );
     return existing ? [existing, button] : button;
 }
@@ -68,6 +74,7 @@ export function CompleteQuest(quest) {
         // TODO Should not show the spoof button on these as well
         if (taskName?.endsWith("ON_DESKTOP")) {
             ToastLog(`ERROR: Use the desktop app to complete the ${questName} quest!`);
+            return;
         }
 
         const secondsNeeded = taskConfig.tasks[taskName].target;
@@ -221,8 +228,6 @@ function ToastLog(...args: any[]) {
     showToast(createToast(args))
     logger.info(args);
 }
-
-window.completeQuest = CompleteQuest;
 
 Commands.registerCommand({
     id: "completeQuest",

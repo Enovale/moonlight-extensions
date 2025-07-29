@@ -21,15 +21,28 @@ export const patches: ExtensionWebExports["patches"] = [
       // Replace button arrays
       {
         match: /(\.Fragment,.*?)\[(\(.*?children:\i}\))\]/,
-        replacement: (_, before, after) => `${before}[${after}, require("orbsAutomation_entrypoint").SpoofButton(questVar)]`,
+        replacement: (_, before, after) => `${before}[${after}, require("orbsAutomation_entrypoint").SpoofButton({ quest: questVar })]`,
       },
       // Replace single buttons
       {
-        match: /(\(0,\i\.jsx\).{1,50}?\.BRAND,.{1,50}?\i\.button,.{1,50}?children:\i}\)):/g,
-        replacement: (_, self) => `require("orbsAutomation_entrypoint").SpoofButton(questVar, ${self}):`
+        match: /(\(0,\i\.jsx\).{1,50}?\.(BRAND|PRIMARY),.{1,50}?\i\.button,.{0,50}?children:(\i|\i\.intl\.string\(.*?\))}\)):/g,
+        replacement: (_, self) => `require("orbsAutomation_entrypoint").SpoofButton({ quest: questVar, existing: ${self} }):`
       }
     ]
   },
+  {
+    find: "contentFooterButtonCont,children",
+    replace: [
+      {
+        match: /(let\{.*?)onClose:(\i),quest:(\i),(.*?=\i,)/,
+        replacement: (_, before, onClose, quest, middle) => `${before}onClose: ${onClose}, quest: ${quest},${middle}questVar = ${quest},onCloseVar = ${onClose},`
+      },
+      {
+        match: /(contentFooterButtonCont.*?\[)/,
+        replacement: (orig) => `${orig}require("orbsAutomation_entrypoint").SpoofButton({ quest: questVar, callback: onCloseVar }), `
+      }
+    ]
+  }
 ];
 
 // https://moonlight-mod.github.io/ext-dev/webpack/#webpack-module-insertion
