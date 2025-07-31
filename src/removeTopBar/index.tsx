@@ -2,7 +2,7 @@ import { ExtensionWebExports } from "@moonlight-mod/types";
 
 const mainToolbarFind = "toolbar:function";
 const guildsFind = "guildsnav";
-const titleBarFind = "TITLE_BAR_LEFT&&";
+const titleBarFind = "showNotificationsInbox";
 const callToolbarFind = "call-members-popout";
 
 // https://moonlight-mod.github.io/ext-dev/webpack/#patching
@@ -11,7 +11,7 @@ export const patches: ExtensionWebExports["patches"] = [
   {
     find: titleBarFind,
     replace: {
-      match: /return \i\?null:\((?=.+?trailing:\(0,\i\.jsxs\)\(\i\.Fragment,{children:(\[.+?]))/,
+      match: /return \i\?null:\((?=.+?trailing:\(0,\i\.jsxs\)\(\i\.Fragment,{children:(\[.+?\]))/,
       replacement: (_, buttons) => `require("removeTopBar_entrypoint").storeButtons(${buttons});return true ? null : (`
     }
   },
@@ -65,10 +65,7 @@ export const webpackModules: ExtensionWebExports["webpackModules"] = {
         ext: "common",
         id: "ErrorBoundary"
       },
-      mainToolbarFind,
-      guildsFind,
       titleBarFind,
-      callToolbarFind
     ],
     entrypoint: true
   }
