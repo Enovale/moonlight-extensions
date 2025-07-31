@@ -1,0 +1,30 @@
+{
+  "$schema": "https://moonlight-mod.github.io/manifest.schema.json",
+  "id": "userpfp",
+  "version": "1.0.0",
+  "apiLevel": 2,
+  "meta": {
+    "name": "UserPFP",
+    "tagline": "Allows you to use an animated avatar without Nitro",
+    "description": "# FIND OUT HOW TO REQUEST A USERPFP [HERE](https://github.com/UserPFP/UserPFP)\n\nPorted from [this](https://github.com/Equicord/Equicord/blob/main/src/equicordplugins/userpfp/) Equicord plugin",
+    "authors": ["nexpid", "thororen", "Enova"],
+    "donate": "https://ko-fi.com/enovale",
+    "source": "https://github.com/Enovale/moonlight-extensions/tree/main/src/userpfp",
+    "tags": ["profiles"]
+  },
+  "settings": {
+    "apiUrl": {
+      "displayName": "API URL",
+      "type": "string",
+      "default": "https://userpfp.github.io/UserPFP/source/data.json",
+      "advice": "reload"
+    },
+    "preferNitro": {
+      "displayName": "Nitro Avatar Preferred",
+      "description": "If both Nitro and UserPFP images are present, use the Nitro Avatar",
+      "type": "boolean",
+      "default": false,
+      "advice": "none"
+    }
+  }
+}
