@@ -1,7 +1,7 @@
 {
   "$schema": "https://moonlight-mod.github.io/manifest.schema.json",
   "id": "removeTopBar",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "apiLevel": 2,
   "meta": {
     "name": "Remove Title Bar",
@@ -11,7 +11,7 @@
     "donate": "https://ko-fi.com/enovale",
     "source": "https://github.com/Enovale/moonlight-extensions/tree/main/src/removeTopBar",
     "tags": ["appearance", "development"],
-    "changelog": "Rework logic to capture all buttons from the titlebar"
+    "changelog": "Updated patch after it was broken by a Discord update, and made it so future breaking changes don't crash Discord."
   },
   "settings": {
     "moveButtons": {
