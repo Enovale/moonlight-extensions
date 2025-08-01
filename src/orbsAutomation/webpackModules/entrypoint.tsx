@@ -72,7 +72,7 @@ export function CompleteQuest(quest) {
         const taskName = ["WATCH_VIDEO", "PLAY_ON_DESKTOP", "STREAM_ON_DESKTOP", "PLAY_ACTIVITY", "WATCH_VIDEO_ON_MOBILE"].find(x => taskConfig.tasks[x] != null);
 
         // TODO Should not show the spoof button on these as well
-        if (taskName?.endsWith("ON_DESKTOP")) {
+        if (!isApp && taskName?.endsWith("ON_DESKTOP")) {
             ToastLog(`ERROR: Use the desktop app to complete the ${questName} quest!`);
             return;
         }
