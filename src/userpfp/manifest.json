@@ -6,9 +6,8 @@
   "meta": {
     "name": "UserPFP",
     "tagline": "Allows you to use an animated avatar without Nitro",
-    "description": "# FIND OUT HOW TO REQUEST A USERPFP [HERE](https://github.com/UserPFP/UserPFP)\n\nPorted from [this](https://github.com/Equicord/Equicord/blob/main/src/equicordplugins/userpfp/) Equicord plugin",
-    "authors": ["nexpid", "thororen", "Enova"],
-    "donate": "https://ko-fi.com/enovale",
+    "description": "# FIND OUT HOW TO REQUEST A USERPFP [HERE](https://github.com/UserPFP/UserPFP)\n\nThis extension is not made officially by UserPFP developers. Please report issues to me first before going to them.\n\nPorted from [this](https://github.com/Equicord/Equicord/blob/main/src/equicordplugins/userpfp/) Equicord plugin",
+    "authors": ["Enova", "nexpid", "thororen"],
     "source": "https://github.com/Enovale/moonlight-extensions/tree/main/src/userpfp",
     "tags": ["profiles"]
   },
