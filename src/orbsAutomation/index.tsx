@@ -30,9 +30,11 @@ export const patches: ExtensionWebExports["patches"] = [
       }
     ]
   },
+  // Add spoof button to video playback modal
   {
     find: "contentFooterButtonCont,children",
     replace: [
+      // Make quest var accessible
       {
         match: /(let\{.*?)onClose:(\i),quest:(\i),(.*?=\i,)/,
         replacement: (_, before, onClose, quest, middle) => `${before}onClose: ${onClose}, quest: ${quest},${middle}questVar = ${quest},onCloseVar = ${onClose},`
@@ -40,6 +42,21 @@ export const patches: ExtensionWebExports["patches"] = [
       {
         match: /(contentFooterButtonCont.*?\[)/,
         replacement: (orig) => `${orig}require("orbsAutomation_entrypoint").SpoofButton({ quest: questVar, callback: onCloseVar }), `
+      }
+    ]
+  },
+  // Quest accepted banner over the user bar in the bottom left
+  {
+    find: ".questAcceptedHeader",
+    replace: [
+      // Make quest var accessible
+      {
+        match: /let\{quest:(\i),(taskDetails:.*?=\i,)/g,
+        replacement: (_, quest, middle) => `let{quest: ${quest},${middle}questVar = ${quest},`
+      },
+      {
+        match: /(?<=\.questAcceptedHeader,children:\[.*?\}\)\}\)),/,
+        replacement: `, require("orbsAutomation_entrypoint").SpoofButton({ quest: questVar, small: true }), `
       }
     ]
   }

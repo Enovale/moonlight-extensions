@@ -1,3 +1,16 @@
-.orbsAutomation-spoof {
-    min-width: 30px
+.orbsAutomation-small {
+    margin-top: calc(-1 * var(--space-4)) !important;
+    width: 24px !important;
+    min-width: 24px !important;
+    height: 24px !important;
+    min-height: 24px !important;
+}
+
+.orbsAutomation-cancel {
+    color: var(--input-error-border) !important;
+}
+
+.orbsAutomation-spoof,
+.orbsAutomation-cancel {
+    min-width: 30px;
 }
