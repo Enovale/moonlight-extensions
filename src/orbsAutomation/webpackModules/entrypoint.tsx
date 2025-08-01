@@ -4,6 +4,7 @@ import Commands from "@moonlight-mod/wp/commands_commands";
 import { InputType, CommandType } from "@moonlight-mod/types/coreExtensions/commands";
 import {
     ScienceIcon,
+    XSmallIcon,
     createToast,
     showToast
 } from "@moonlight-mod/wp/discord/components/common/index";
@@ -18,23 +19,35 @@ PanelButton = spacepack.require("discord/components/common/PanelButton").default
 const logger = moonlight.getLogger("orbsAutomation/entrypoint");
 
 let isApp = !moonlightNode.isBrowser;
-let currentlyCompletingQuest = false;
+let currentlyCompletingQuest: string | undefined;
 
 interface SpoofButtonProps {
     quest: any,
     existing: React.JSX.Element | undefined,
+    small: boolean,
     callback: Function
 }
 
-export function SpoofButton({ quest, existing, callback }: SpoofButtonProps) {
+export function SpoofButton({ quest, existing, small, callback }: SpoofButtonProps) {
     let button;
-    if (QuestNeedsCompleting(quest))
-        button = (
-            <PanelButton className="orbsAutomation-spoof"
-                tooltipText="Spoof Quest"
-                icon={ScienceIcon}
-                onClick={() => { callback?.(); CompleteQuest(quest); }} />
-        );
+    if (QuestNeedsCompleting(quest)) {
+        let questBeingCompleted = currentlyCompletingQuest === quest.id;
+        if (questBeingCompleted) {
+            button = (
+                <PanelButton className={`orbsAutomation-cancel${small ? " orbsAutomation-small" : ""}`}
+                    tooltipText="Cancel Spoofing Quest"
+                    icon={XSmallIcon}
+                    onClick={() => { callback?.(); ReportCancelledQuest(quest.config.messages.questName, true); }} />
+            );
+        } else {
+            button = (
+                <PanelButton className={`orbsAutomation-spoof${small ? " orbsAutomation-small" : ""}`}
+                    tooltipText="Spoof Quest"
+                    icon={ScienceIcon}
+                    onClick={() => { callback?.(); CompleteQuest(quest); }} />
+            );
+        }
+    }
     return existing ? [existing, button] : button;
 }
 
@@ -52,6 +65,10 @@ export default function CompleteAvailableQuest() {
     CompleteQuest(quest);
 }
 
+export function CurrentlySpoofingQuest(quest) {
+    return currentlyCompletingQuest === quest.id;
+}
+
 export function CompleteQuest(quest) {
     if (currentlyCompletingQuest) {
         ToastLog("ERROR: A quest is already being spoofed! Please wait...");
@@ -61,7 +78,7 @@ export function CompleteQuest(quest) {
         return;
     }
 
-    currentlyCompletingQuest = true;
+    currentlyCompletingQuest = quest.id;
     try {
         const pid = Math.floor(Math.random() * 30000) + 1000;
 
@@ -90,6 +107,11 @@ export function CompleteQuest(quest) {
                 let completed = false;
                 fn = async () => {
                     while (true) {
+                        if (!CurrentlySpoofingQuest(quest)) {
+                            ReportCancelledQuest(questName);
+                            return;
+                        }
+
                         const maxAllowed = Math.floor((Date.now() - enrolledAt) / 1000) + maxFuture;
                         const diff = maxAllowed - secondsDone;
                         const timestamp = secondsDone + speed;
@@ -104,10 +126,14 @@ export function CompleteQuest(quest) {
                         }
                         await new Promise(resolve => setTimeout(resolve, interval * 1000));
                     }
+                    if (!CurrentlySpoofingQuest(quest)) {
+                        ReportCancelledQuest(questName);
+                        return;
+                    }
                     if (!completed) {
                         await HTTP.post({ url: `/quests/${quest.id}/video-progress`, body: { timestamp: secondsNeeded } });
                     }
-                    ReportCompletedQuest(taskName);
+                    ReportCompletedQuest(questName);
                 };
                 fn();
                 ToastLog(`Spoofing video for ${questName}.`);
@@ -141,10 +167,10 @@ export function CompleteQuest(quest) {
 
                     fn = data => {
                         let progress = quest.config.configVersion === 1 ? data.userStatus.streamProgressSeconds : Math.floor(data.userStatus.progress.PLAY_ON_DESKTOP.value);
-                        ToastLog(`Quest progress: ${progress}/${secondsNeeded}`);
+                        logger.info(`Quest progress: ${progress}/${secondsNeeded}`);
 
-                        if (progress >= secondsNeeded) {
-                            ReportCompletedQuest(taskName);
+                        if (progress >= secondsNeeded || !CurrentlySpoofingQuest(quest)) {
+                            CurrentlySpoofingQuest(quest) ? ReportCompletedQuest(questName) : ReportCancelledQuest(questName);
 
                             RunningGameStore.getRunningGames = realGetRunningGames;
                             RunningGameStore.getGameForPID = realGetGameForPID;
@@ -168,10 +194,10 @@ export function CompleteQuest(quest) {
 
                 fn = data => {
                     let progress = quest.config.configVersion === 1 ? data.userStatus.streamProgressSeconds : Math.floor(data.userStatus.progress.STREAM_ON_DESKTOP.value);
-                    ToastLog(`Quest progress: ${progress}/${secondsNeeded}`);
+                    logger.info(`Quest progress: ${progress}/${secondsNeeded}`);
 
-                    if (progress >= secondsNeeded) {
-                        ReportCompletedQuest(taskName);
+                    if (progress >= secondsNeeded || !CurrentlySpoofingQuest(quest)) {
+                        CurrentlySpoofingQuest(quest) ? ReportCompletedQuest(questName) : ReportCancelledQuest(questName);
 
                         ApplicationStreamingStore.getStreamerActiveStreamMetadata = realFunc;
                         Dispatcher.unsubscribe("QUESTS_SEND_HEARTBEAT_SUCCESS", fn);
@@ -188,7 +214,7 @@ export function CompleteQuest(quest) {
                 const streamKey = `call:${channelId}:1`;
 
                 fn = async () => {
-                    ToastLog("Completing quest", questName, "-", quest.config.messages.questName);
+                    logger.info("Completing quest", questName, "-", quest.config.messages.questName);
 
                     while (true) {
                         const res = await HTTP.post({ url: `/quests/${quest.id}/heartbeat`, body: { stream_key: streamKey, terminal: false } });
@@ -197,36 +223,42 @@ export function CompleteQuest(quest) {
 
                         await new Promise(resolve => setTimeout(resolve, 20 * 1000));
 
-                        if (progress >= secondsNeeded) {
+                        if (progress >= secondsNeeded || !CurrentlySpoofingQuest(quest)) {
                             await HTTP.post({ url: `/quests/${quest.id}/heartbeat`, body: { stream_key: streamKey, terminal: true } });
                             break;
                         }
                     }
 
-                    ReportCompletedQuest(taskName);
+                    CurrentlySpoofingQuest(quest) ? ReportCompletedQuest(questName) : ReportCancelledQuest(questName);
                 }
                 fn();
                 break;
 
             default:
+                ToastLog("Unknown Activity Type ", taskName);
                 break;
         }
     }
     catch (e) {
         showToast(createToast("An error occured. Please check the console."));
         console.error(e);
-    } finally {
-        currentlyCompletingQuest = false;
     }
 }
 
-function ReportCompletedQuest(taskName) {
-    ToastLog(`Completed quest ${taskName}!`);
+function ReportCompletedQuest(questName) {
+    ToastLog(`Completed quest ${questName}!`);
+    currentlyCompletingQuest = undefined;
+}
+
+function ReportCancelledQuest(questName, toast = false) {
+    if (toast)
+        ToastLog(`Cancelled spoofing quest ${questName}!`);
+    currentlyCompletingQuest = undefined;
 }
 
 function ToastLog(...args: any[]) {
-    showToast(createToast(args))
-    logger.info(args);
+    showToast(createToast(...args))
+    logger.info(...args);
 }
 
 Commands.registerCommand({

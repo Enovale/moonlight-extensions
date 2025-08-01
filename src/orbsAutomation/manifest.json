@@ -1,16 +1,16 @@
 {
   "$schema": "https://moonlight-mod.github.io/manifest.schema.json",
   "id": "orbsAutomation",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "apiLevel": 2,
   "meta": {
     "name": "Discord Quest Automation",
     "tagline": "Automates discord quests of all kinds!",
-    "description": "# USE AT YOUR OWN RISK.\n\n**This extension makes many automated and unwrapped Discord requests, and is of course specifically designed to bypass work expected of you by Discord.**",
+    "description": "# USE AT YOUR OWN RISK.\n\n**This extension makes many automated and unwrapped Discord requests, and is of course specifically designed to bypass work expected of you by Discord. It's also not intended for the average user to interact with, and bugs that may further your risk of bans are very possible.**",
     "authors": ["aamiaa", "Enova"],
     "donate": "https://ko-fi.com/enovale",
     "source": "https://github.com/Enovale/moonlight-extensions/tree/main/src/orbsAutomation",
     "tags": ["dangerZone", "qol"],
-    "changelog": "Fix check for desktop version"
+    "changelog": "Add spoof buttons to more places and allow you to cancel quest spoofing"
   }
 }
