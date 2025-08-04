@@ -1,0 +1,39 @@
+{
+  "$schema": "https://moonlight-mod.github.io/manifest.schema.json",
+  "id": "cleanChatBar",
+  "version": "1.0.0",
+  "apiLevel": 2,
+  "meta": {
+    "name": "Clean Chat Bar",
+    "tagline": "Allows you to remove any button from the chat bar.",
+    "description": "Does what it says on the tin.",
+    "authors": ["Enova"],
+    "donate": "https://ko-fi.com/enovale",
+    "source": "https://github.com/Enovale/moonlight-extensions/tree/main/src/cleanChatBar",
+    "tags": ["qol", "chat"]
+  },
+  "dependencies": ["componentEditor"],
+  "settings": {
+    "removedButtons": {
+      "displayName": "Buttons To Remove",
+      "description": "Select all that you don't want to see",
+      "type": "multiselect",
+      "options": [
+        { "value": "gift", "label": "Gift" },
+        { "value": "gif", "label": "Gif Picker" },
+        { "value": "sticker", "label": "Sticker Picker" },
+        { "value": "emoji", "label": "Emoji Picker" },
+        { "value": "activity", "label": "Activity Launcher" }
+      ],
+      "default": ["gift"],
+      "advice": "none"
+    },
+    "noRandomEmoji": {
+      "displayName": "No Random Emoji",
+      "description": "Makes the emoji picker button not randomly select an emoji when you hover over it.",
+      "type": "boolean",
+      "default": true,
+      "advice": "none"
+    }
+  }
+}
