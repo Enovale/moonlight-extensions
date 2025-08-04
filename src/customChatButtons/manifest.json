@@ -9,5 +9,6 @@
     "description": "A longer description that can **use Markdown**",
     "authors": ["You!"],
     "source": "https://example.com/"
-  }
+  },
+  "dependencies": ["spacepack", "common", "componentEditor"]
 }
