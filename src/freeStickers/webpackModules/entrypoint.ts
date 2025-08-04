@@ -77,7 +77,7 @@ async function sendAnimatedSticker(channelId: string, stickerLink: string, stick
 }
 
 export default function modifyIfNeeded(channelId: string, msg: Message, attachments: Attachments) {
-	if (attachments.stickerIds == null || attachments.stickerIds.length <= 0) return true;
+	if (attachments?.stickerIds == null || attachments.stickerIds.length <= 0) return true;
 
 	// Find all emojis from the captured message string and return object with emojiURLS and content
 	const extractedStickers = extractUnusableEmojis(channelId, attachments.stickerIds);
