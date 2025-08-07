@@ -6,44 +6,36 @@ const patchFind = "StKTho,{";
 export const patches: ExtensionWebExports["patches"] = [
   {
     find: patchFind,
+    hardFail: true,
     replace: [
       {
         // Style the indicator and add function call to modify the children before rendering
-        match: /(?<=children:\[(\i)\.length>0.{0,300}?"aria-atomic":!0,children:)\i/,
-        replacement: `require("typingTweaks_entrypoint").renderTypingUsers({ users: $1, guildId: arguments[0]?.channel?.guild_id, children: $& })`
+        match: /(?<="aria-atomic":!0,children:)\i/,
+        replacement: `require("typingTweaks_entrypoint").renderTypingUsers({ users: arguments[0]?.typingUserObjects, guildId: arguments[0]?.channel?.guild_id, children: $& })`
       },
       {
-        // Changes the indicator to keep the user object when creating the list of typing users
-        match: /\.map\((\i)=>\i\.\i\.getName\(\i(?:\.guild_id)?,\i\.id,\1\)\)/,
-        replacement: ""
+        match: /(?<=function \i\(\i\)\{)(?=[^}]+?\{channel:\i,isThreadCreation:\i=!1\})/,
+        replacement: `let typingUserObjects = require("typingTweaks_entrypoint").useTypingUsers(arguments[0]?.channel);`
       },
       {
-        // Adds the alternative formatting for several users typing
-        match: /(,{a:(\i),b:(\i),c:\i}\):\i\.length>3&&\(\i=)\i\.\i\.string\(\i\.\iuVDhqa\)(?<=(\i)\.length.+?)/,
-        replacement: (_, rest, a, b, users) =>
-          `${rest}require("typingTweaks_entrypoint").buildSeveralUsers({ a: ${a}, b: ${b}, count: ${users}.length - 2, guildId: arguments[0]?.channel?.guild_id })`
-      }
-    ]
-  },
-  {
-    find: patchFind,
-    prerequisite: () => moonlight.getConfigOption<boolean>("typingTweaks", "alternativeFormatting")!,
-    replace: [
+        // Get the typing users as user objects instead of names
+        match: /typingUsers:(\i)\?\[\]:\i,/,
+        // check by typeof so if the variable is not defined due to other patch failing, it won't throw a ReferenceError
+        replacement: "$&typingUserObjects: $1 || typeof typingUserObjects === 'undefined' ? [] : typingUserObjects,"
+      },
       {
-        // Adds the alternative formatting for several users typing
-        match: /(,{a:(\i),b:(\i),c:\i}\):\i\.length>3&&\(\i=)\i\.\i\.string\(\i\.\i\.uVDhqa\)(?<=(\i)\.length.+?)/,
-        replacement: (_, rest, a, b, users) =>
-          `${rest}require("typingTweaks_entrypoint").buildSeveralUsers({ a: ${a}, b: ${b}, count: ${users}.length - 2, guildId: arguments[0]?.channel?.guild_id })`
+        // users.length > 3 && (component = intl(key))
+        match: /(&&\(\i=)(\i\.\i\.format\(\i\.\iQ8lUnJ,\{\}\))/,
+        replacement: `$1moonlight.getConfigOption("typingTweaks", "alternativeFormatting") ? require("typingTweaks_entrypoint").buildSeveralUsers({ users: arguments[0]?.typingUserObjects, count: arguments[0]?.typingUserObjects?.length - 2, guildId: arguments[0]?.channel?.guild_id }) : $2`
       }
     ]
   },
   // https://github.com/Equicord/Equicord/blob/main/src/equicordplugins/amITyping/index.ts
   {
     find: `"handleDismissInviteEducation"`,
-    prerequisite: () => moonlight.getConfigOption<boolean>("typingTweaks", "showSelfTyping")!,
     replace: {
       match: /\i\.default\.getCurrentUser\(\)/,
-      replacement: `""`
+      replacement: `moonlight.getConfigOption("typingTweaks", "showSelfTyping") ? null : $&`
     }
   }
 ];

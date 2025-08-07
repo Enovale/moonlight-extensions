@@ -1,17 +1,17 @@
 {
   "$schema": "https://moonlight-mod.github.io/manifest.schema.json",
   "id": "typingTweaks",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "apiLevel": 2,
   "meta": {
     "name": "Typing Tweaks",
     "tagline": "Show avatars and role colours in the typing indicator",
     "description": "Ported from [this](https://github.com/Vendicated/Vencord/tree/main/src/plugins/typingTweaks) and [this](https://github.com/Equicord/Equicord/blob/main/src/equicordplugins/amITyping/) Vencord plugin",
-    "authors": ["zt", "MrDiamond", "Enova"],
+    "authors": ["sadan", "zt", "MrDiamond", "Enova"],
     "donate": "https://ko-fi.com/enovale",
     "source": "https://github.com/Enovale/moonlight-extensions/tree/main/src/typingTweaks",
     "tags": ["qol", "chat"],
-    "changelog": "Fixed erronious style tag"
+    "changelog": "Discord update fix from [Vencord](https://github.com/Vendicated/Vencord/commit/74d78d89ed087cf25ad2c1e565f0736b92d89539)\n\nAlso, settings don't force a reload anymore"
   },
   "dependencies": ["spacepack", "common"],
   "settings": {
@@ -27,14 +27,14 @@
       "description": "Show a more useful message when several users are typing",
       "type": "boolean",
       "default": true,
-      "advice": "reload"
+      "advice": "none"
     },
     "showSelfTyping": {
       "displayName": "Show Yourself Typing",
       "description": "Display when you are typing along with all other typing users",
       "type": "boolean",
       "default": false,
-      "advice": "reload"
+      "advice": "none"
     }
   }
 }
