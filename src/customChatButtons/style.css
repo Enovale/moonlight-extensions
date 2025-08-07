@@ -1,0 +1,11 @@
+.customChatButtons-buttonList {
+    gap: 8px;
+}
+
+.customChatButtons-buttonList-entry {
+    display: grid;
+    height: 44px;
+    gap: 8px;
+    grid-template-columns: auto auto 40px;
+    align-items: center;
+}
