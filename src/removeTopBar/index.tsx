@@ -20,7 +20,7 @@ export const patches: ExtensionWebExports["patches"] = [
   },
   // Add buttons
   {
-    find: "toolbar:function",
+    find: `["isAuthenticated"]`,
     replace: {
       match: /\.toggleParticipantsList\(\i,!\i\)}\)]}\)/,
       replacement: (orig: string) => `${orig},require("removeTopBar_entrypoint").getIcons()`
