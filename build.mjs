@@ -18,6 +18,7 @@ if (clean) {
       ext,
       entry: path.resolve(path.join("src", ext)),
       output: path.resolve(path.join("dist", ext)),
+      extraConfig: { loader: { ".svg": "text" } },
       esm: esm.includes(ext)
     };
 
