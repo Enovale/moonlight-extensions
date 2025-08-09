@@ -6,7 +6,8 @@ export const patches: ExtensionWebExports["patches"] = [
   {
     find: ".CHAT_INPUT_BUTTON_NOTIFICATION,width:",
     replace: {
-      match: /,onClick:(\i)\?void 0:/,
+      // Don't add patch if it's already been added by other extensions
+      match: /(?<!onContextMenu),onClick:(\i)\?void 0:/,
       replacement: (orig, disabled) => `,onContextMenu:${disabled}?void 0:arguments[0].onContextMenu${orig}`
     }
   }

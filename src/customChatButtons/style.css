@@ -12,6 +12,8 @@
 
 .customChatButtons-colored-svg {
     fill: currentColor;
+    width: 20px;
+    height: 20px;
     color: var(--interactive-normal);
 }
 

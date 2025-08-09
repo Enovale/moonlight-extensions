@@ -64,7 +64,7 @@ export function SvgPickerModal({ entry, transitionState, onClose, setEntryVal }:
                                 ))}
                             </Flex>
                         </FormItem>
-                        <FormItem title="File Path / SVG Data">
+                        <FormItem title="File Path / Icon Data URL">
                             <div className={TextAreaWrapperStyles.wrapper}>
                                 <TextArea
                                     className={`${TextAreaStyles.textArea} ${ScrollbarStyles.scrollbarDefault} moonbase-resizeable`}
