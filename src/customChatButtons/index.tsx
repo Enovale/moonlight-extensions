@@ -45,5 +45,9 @@ export const webpackModules: ExtensionWebExports["webpackModules"] = {
       { ext: "moonbase", id: "ui" },
       ':"USER_SETTINGS_MODAL_SET_SECTION"'
     ]
+  },
+
+  svgPickerModal: {
+
   }
 };
