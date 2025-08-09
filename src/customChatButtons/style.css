@@ -6,6 +6,15 @@
     display: grid;
     height: 44px;
     gap: 8px;
-    grid-template-columns: auto auto 40px;
+    grid-template-columns: auto min-content 40px;
     align-items: center;
+}
+
+.customChatButtons-colored-svg {
+    fill: currentColor;
+    color: var(--interactive-normal);
+}
+
+.customChatButtons-svg-picker-modal-svg-list {
+    gap: 8px;
 }
