@@ -23,6 +23,11 @@ const { sendMessage } = spacepack.require("discord/actions/MessageActionCreators
 
 const natives = moonlight.getNatives("customChatButtons");
 
+interface SpriteDataDefinition {
+    data: string | React.ReactNode | React.ReactNode[] | undefined,
+    isSvg: boolean
+}
+
 interface BuiltinSpriteMap {
     [key: string]: string | undefined
 }
@@ -31,6 +36,8 @@ export const builtinSprites: BuiltinSpriteMap = {
     meow: meowSvg,
     woof: woofSvg,
 };
+
+const cachedImages: { [id: string]: SpriteDataDefinition; } = {}
 
 function ensureStorageInit() {
     if (!moonlight.localStorage.getItem(selectedButtonKey))
@@ -41,100 +48,117 @@ export function SvgFromData({ path }: { path: string | undefined }) {
     if (!path)
         return null;
 
-    let data: string | undefined;
+    let data: string | React.ReactNode | React.ReactNode[] | undefined;
     let isSvg: boolean;
-    if (Object.keys(builtinSprites).includes(path))
-        data = builtinSprites[path], isSvg = true;
-    else
-        ({ data, isSvg } = natives.getImageData(path));
 
-    if (!data)
-        return null;
+    if (path in cachedImages) {
+        ({ data, isSvg } = cachedImages[path]);
+    } else {
+        if (path in builtinSprites)
+            data = builtinSprites[path], isSvg = true;
+        else
+            ({ data, isSvg } = natives.getImageData(path));
 
-    return (
-        <div className={`${SpriteStyles.spriteContainer} customChatButtons-colored-svg`}>
-            {isSvg && parse(data, {
+        if (isSvg)
+            data = parse(data as string, {
                 replace(domNode: any) {
                     if (domNode.attribs && domNode.name === 'svg') {
                         domNode.attribs.className = "customChatButtons-colored-svg";
                         return domNode;
                     }
                 }
-            })}
-            {!isSvg && <img className="customChatButtons-colored-svg" src={data} />}
+            });
+
+        cachedImages[path] = { data: data, isSvg: isSvg };
+    }
+
+    if (!data)
+        return null;
+
+    return (
+        <div className={`${SpriteStyles.spriteContainer} customChatButtons-colored-svg`}>
+            {isSvg && data}
+            {!isSvg && <img className="customChatButtons-colored-svg" src={data as string} />}
         </div>
     )
 }
 
 function chatButton() {
     let buttons = moonlight.getConfigOption<ButtonEntry[]>(extensionKey, "buttonList") ?? [];
-    const [buttonIdx, setButtonIdx] = useState(Number(moonlight.localStorage.getItem(selectedButtonKey)!));
+    let customButtonCount = moonlight.getConfigOption<number>("customChatButtons", "customButtonCount") ?? 1;
+    let customButtons: React.ReactNode[] = [];
 
-    function setButtonIndex(index: number) {
-        let previousIndex = buttonIdx;
-        if (buttonIdx >= buttons.length)
-            index = buttons.length - 1;
+    for (let i = 0; i < customButtonCount; i++) {
+        const [buttonIdx, setButtonIdx] = useState(Number(moonlight.localStorage.getItem(selectedButtonKey)!));
 
-        moonlight.localStorage.setItem(selectedButtonKey, String(index));
-        setButtonIdx(index);
+        function setButtonIndex(index: number) {
+            let previousIndex = buttonIdx;
+            if (buttonIdx >= buttons.length)
+                index = buttons.length - 1;
 
-        if (moonlight.getConfigOption(extensionKey, "sendOnChange") && previousIndex != index) {
-            if (buttons.length > 0)
-                doSendMessage(buttons[index]);
+            moonlight.localStorage.setItem(selectedButtonKey, String(index));
+            setButtonIdx(index);
+
+            if (moonlight.getConfigOption(extensionKey, "sendOnChange") && previousIndex != index) {
+                if (buttons.length > 0)
+                    doSendMessage(buttons[index]);
+            }
         }
-    }
 
-    function getButton(idx: number) {
-        if (buttons.length <= 0)
+        function getButton(idx: number) {
+            if (buttons.length <= 0)
+                return undefined;
+
+            return buttons[idx];
+        }
+
+        function ButtonContextMenu() {
+            let buttons = moonlight.getConfigOption<ButtonEntry[]>(extensionKey, "buttonList")!;
+
+            return (
+                <Menu navId={extensionKey + "_buttonList"} onClose={closeContextMenu} aria-label="Custom Chat Button Selector">
+                    {buttons.map((val, i) => (
+                        <MenuItem id={val.message} label={val.message} icon={<SvgFromData path={val.svg} />} action={() => { setButtonIndex(i); }} />
+                    ))}
+                </Menu>
+            );
+        }
+
+        function onClick() {
+            doSendMessage(getButton(buttonIdx));
+        }
+
+        function doSendMessage(button: ButtonEntry | undefined) {
+            if (!button)
+                return;
+
+            let channel = ChannelStore.getChannel(SelectedChannelStore.getChannelId());
+            sendMessage(channel.id, { content: button.message });
+        }
+
+        let button = getButton(buttonIdx);
+        if (!button)
             return undefined;
 
-        return buttons[idx];
-    }
-
-    function ButtonContextMenu() {
-        let buttons = moonlight.getConfigOption<ButtonEntry[]>(extensionKey, "buttonList")!;
-
-        return (
-            <Menu navId={extensionKey + "_buttonList"} onClose={closeContextMenu} aria-label="Custom Chat Button Selector">
-                {buttons.map((val, i) => (
-                    <MenuItem id={val.message} label={val.message} icon={<SvgFromData path={val.svg} />} action={() => { setButtonIndex(i); }} />
-                ))}
-            </Menu>
+        customButtons.push(
+            <ErrorBoundary noop={true}>
+                <Tooltip text={button?.message}>
+                    {(tooltipProps: any) => (
+                        <ChatBarButton {...tooltipProps} className={ButtonStyles.button}
+                            onClick={onClick}
+                            onContextMenu={(e: React.SyntheticEvent) => {
+                                e.preventDefault();
+                                openContextMenu(e, () => <ButtonContextMenu />);
+                            }}>
+                            <SvgFromData path={button?.svg} />
+                        </ChatBarButton>
+                    )}
+                </Tooltip>
+            </ErrorBoundary>
         );
     }
 
-    function onClick() {
-        doSendMessage(getButton(buttonIdx));
-    }
-
-    function doSendMessage(button: ButtonEntry | undefined) {
-        if (!button)
-            return;
-
-        let channel = ChannelStore.getChannel(SelectedChannelStore.getChannelId());
-        sendMessage(channel.id, { content: button.message });
-    }
-
-    let button = getButton(buttonIdx);
-    if (!button)
-        return undefined;
-
-    return (
-        <ErrorBoundary noop={true}>
-            <Tooltip text={button?.message}>
-                {(tooltipProps: any) => (
-                    <ChatBarButton {...tooltipProps} className={ButtonStyles.button}
-                        onClick={onClick}
-                        onContextMenu={(e: React.SyntheticEvent) => {
-                            e.preventDefault();
-                            openContextMenu(e, () => <ButtonContextMenu />);
-                        }}>
-                        <SvgFromData path={button?.svg} />
-                    </ChatBarButton>
-                )}
-            </Tooltip>
-        </ErrorBoundary>
-    )
+    return customButtons;
 }
 
 ensureStorageInit();
