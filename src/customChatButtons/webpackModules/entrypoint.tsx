@@ -2,6 +2,7 @@ import ChatButtonList from "@moonlight-mod/wp/componentEditor_chatButtonList";
 import { Tooltip } from "@moonlight-mod/wp/discord/components/common/index";
 import { SelectedChannelStore, ChannelStore } from "@moonlight-mod/wp/common_stores";
 import { openContextMenu, closeContextMenu } from "@moonlight-mod/wp/discord/actions/ContextMenuActionCreators";
+import { sendMessage } from "@moonlight-mod/wp/discord/actions/MessageActionCreators";
 import { Menu } from "@moonlight-mod/wp/discord/components/common/index";
 import { MenuItem } from "@moonlight-mod/wp/contextMenu_contextMenu";
 import ErrorBoundary from "@moonlight-mod/wp/common_ErrorBoundary";
@@ -9,78 +10,24 @@ import spacepack from "@moonlight-mod/wp/spacepack_spacepack";
 import { useState } from "@moonlight-mod/wp/react";
 import React from "@moonlight-mod/wp/react";
 import { ButtonEntry } from "./settings";
-import parse from 'html-react-parser';
-import meowSvg from "../assets/meow.svg";
-import woofSvg from "../assets/woof.svg";
+import { SvgFromData } from "./svgdata";
 
 const extensionKey = "customChatButtons";
 const selectedButtonKey = extensionKey + "_selectedButton";
 
 const ChatBarButton = spacepack.findByCode("CHAT_INPUT_BUTTON_NOTIFICATION,width")[0].exports.Z;
-const SpriteStyles = spacepack.findByCode(",spriteContainer:")[0].exports;
 const ButtonStyles = spacepack.findByCode(",expressionPickerPositionLayer:")[0].exports;
-const { sendMessage } = spacepack.require("discord/actions/MessageActionCreators").default;
 
-const natives = moonlight.getNatives("customChatButtons");
+function getStorageSelectedButton(index: number) {
+    let ret = moonlight.localStorage.getItem(selectedButtonKey + index.toString());
+    if (!ret)
+        moonlight.localStorage.setItem(selectedButtonKey + index.toString(), "0");
 
-interface SpriteDataDefinition {
-    data: string | React.ReactNode | React.ReactNode[] | undefined,
-    isSvg: boolean
+    return Number(ret ?? "0");
 }
 
-interface BuiltinSpriteMap {
-    [key: string]: string | undefined
-}
-
-export const builtinSprites: BuiltinSpriteMap = {
-    meow: meowSvg,
-    woof: woofSvg,
-};
-
-const cachedImages: { [id: string]: SpriteDataDefinition; } = {}
-
-function ensureStorageInit() {
-    if (!moonlight.localStorage.getItem(selectedButtonKey))
-        moonlight.localStorage.setItem(selectedButtonKey, "0");
-}
-
-export function SvgFromData({ path }: { path: string | undefined }) {
-    if (!path)
-        return null;
-
-    let data: string | React.ReactNode | React.ReactNode[] | undefined;
-    let isSvg: boolean;
-
-    if (path in cachedImages) {
-        ({ data, isSvg } = cachedImages[path]);
-    } else {
-        if (path in builtinSprites)
-            data = builtinSprites[path], isSvg = true;
-        else
-            ({ data, isSvg } = natives.getImageData(path));
-
-        if (isSvg)
-            data = parse(data as string, {
-                replace(domNode: any) {
-                    if (domNode.attribs && domNode.name === 'svg') {
-                        domNode.attribs.className = "customChatButtons-colored-svg";
-                        return domNode;
-                    }
-                }
-            });
-
-        cachedImages[path] = { data: data, isSvg: isSvg };
-    }
-
-    if (!data)
-        return null;
-
-    return (
-        <div className={`${SpriteStyles.spriteContainer} customChatButtons-colored-svg`}>
-            {isSvg && data}
-            {!isSvg && <img className="customChatButtons-colored-svg" src={data as string} />}
-        </div>
-    )
+function setStorageSelectedButton(btnIndex: number, value: number) {
+    moonlight.localStorage.setItem(selectedButtonKey + btnIndex.toString(), value.toString());
 }
 
 function chatButton() {
@@ -89,14 +36,14 @@ function chatButton() {
     let customButtons: React.ReactNode[] = [];
 
     for (let i = 0; i < customButtonCount; i++) {
-        const [buttonIdx, setButtonIdx] = useState(Number(moonlight.localStorage.getItem(selectedButtonKey)!));
+        const [buttonIdx, setButtonIdx] = useState(getStorageSelectedButton(i));
 
         function setButtonIndex(index: number) {
             let previousIndex = buttonIdx;
             if (buttonIdx >= buttons.length)
                 index = buttons.length - 1;
 
-            moonlight.localStorage.setItem(selectedButtonKey, String(index));
+            setStorageSelectedButton(i, index);
             setButtonIdx(index);
 
             if (moonlight.getConfigOption(extensionKey, "sendOnChange") && previousIndex != index) {
@@ -161,5 +108,4 @@ function chatButton() {
     return customButtons;
 }
 
-ensureStorageInit();
 ChatButtonList.addButton(extensionKey, chatButton, "gif", true);

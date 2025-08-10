@@ -17,6 +17,8 @@ export const patches: ExtensionWebExports["patches"] = [
 export const webpackModules: ExtensionWebExports["webpackModules"] = {
   entrypoint: {
     dependencies: [
+      { ext: "customChatButtons", id: "svgdata" },
+      { id: "react" },
       { ext: "spacepack", id: "spacepack" },
       { ext: "componentEditor", id: "chatButtonList" },
       { ext: "common", id: "stores" },
@@ -24,18 +26,20 @@ export const webpackModules: ExtensionWebExports["webpackModules"] = {
       { id: "discord/components/common/index" },
       { ext: "contextMenu", id: "contextMenu" },
       "CHAT_INPUT_BUTTON_NOTIFICATION,width",
-      ",spriteContainer:",
-      "discord/actions/MessageActionCreators"
+      "discord/actions/MessageActionCreators",
+      "discord/actions/ContextMenuActionCreators",
     ],
     entrypoint: true
   },
 
   settings: {
     dependencies: [
-      { ext: "customChatButtons", id: "entrypoint" },
+      { ext: "customChatButtons", id: "svgdata" },
+      { ext: "customChatButtons", id: "svgPickerModal" },
       { ext: "spacepack", id: "spacepack" },
       { ext: "moonbase", id: "moonbase" },
       { ext: "settings", id: "settings" },
+      { ext: "common", id: "ErrorBoundary" },
       { id: "discord/components/common/index" },
       { id: "discord/uikit/TextInput" },
       { id: "discord/uikit/legacy/Button" },
@@ -49,6 +53,26 @@ export const webpackModules: ExtensionWebExports["webpackModules"] = {
   },
 
   svgPickerModal: {
+    dependencies: [
+      { ext: "customChatButtons", id: "svgdata" },
+      { id: "react" },
+      { ext: "spacepack", id: "spacepack" },
+      { id: "discord/components/common/index" },
+      { id: "discord/uikit/legacy/Button" },
+      { id: "discord/modules/modals/Modals" },
+      { id: "discord/uikit/Flex" },
+      { id: "discord/styles/shared/Margins.css" },
+      { ext: "common", id: "ErrorBoundary" },
+      "scrollbarGhostHairline:",
+      "helperTextContainer:"
+    ]
+  },
 
+  svgdata: {
+    dependencies: [
+      { id: "react" },
+      { ext: "spacepack", id: "spacepack" },
+      ",spriteContainer:",
+    ]
   }
 };

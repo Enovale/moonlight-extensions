@@ -3,7 +3,6 @@ import Moonbase from "@moonlight-mod/wp/moonbase_moonbase";
 import spacepack from "@moonlight-mod/wp/spacepack_spacepack";
 import MarkupUtils from "@moonlight-mod/wp/discord/modules/markup/MarkupUtils";
 import React from "@moonlight-mod/wp/react";
-import { builtinSprites } from "./entrypoint";
 
 import {
     FormItem,
@@ -19,6 +18,7 @@ import Margins from "@moonlight-mod/wp/discord/styles/shared/Margins.css";
 import ErrorBoundary from "@moonlight-mod/wp/common_ErrorBoundary";
 
 import openSvgPickerModal from "./svgPickerModal";
+import { builtinSprites } from "./svgdata";
 
 export interface ButtonEntry {
     message: string,
@@ -71,7 +71,7 @@ export default function ButtonListSettings({ value = [], setValue }: CustomCompo
         <ErrorBoundary>
             <FormItem className={Margins.marginTop20} title={displayName}>
                 {description && <FormText className={Margins.marginBottom4}>{markdownify(description)}</FormText>}
-                <Flex direction={Flex.Direction.VERTICAL} className="moonbase-settings-list customChatButtons-buttonList">
+                <Flex direction={Flex.Direction.VERTICAL} className="customChatButtons-buttonList moonbase-settings-list">
                     {entries.map((val, i) => {
                         function setEntryVal(e: ButtonEntry) {
                             entries[i] = e;
