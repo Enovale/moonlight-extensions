@@ -10,14 +10,14 @@ import {
     TextArea,
     FormItem
 } from "@moonlight-mod/wp/discord/components/common/index";
-import { SvgFromData, builtinSprites } from "./entrypoint";
 import { Button } from "@moonlight-mod/wp/discord/uikit/legacy/Button";
 import spacepack from "@moonlight-mod/wp/spacepack_spacepack";
 import { openModal } from "@moonlight-mod/wp/discord/modules/modals/Modals";
 import Flex from "@moonlight-mod/wp/discord/uikit/Flex";
 import Margins from "@moonlight-mod/wp/discord/styles/shared/Margins.css";
-import { ButtonEntry } from "./settings";
 import ErrorBoundary from "@moonlight-mod/wp/common_ErrorBoundary";
+import { ButtonEntry } from "./settings";
+import { builtinSprites, SvgFromData } from "./svgdata";
 
 const ScrollbarStyles = spacepack.findByCode("scrollbarGhostHairline:")[0].exports;
 const TextAreaStyles = spacepack.findByCode(',errorOverflow:', '"text-md/normal":')[0].exports;
