@@ -14,10 +14,17 @@
   "dependencies": ["spacepack", "settings", "common", "contextMenu", "componentEditor"],
   "settings": {
     "buttonList": {
-      "displayName": "Move Title Bar Buttons",
-      "description": "Move the buttons available in the title bar somewhere else",
+      "displayName": "Available Custom Buttons",
+      "description": "N/A",
       "type": "custom",
       "default": "default",
+      "advice": "none"
+    },
+    "customButtonCount": {
+      "displayName": "Custom Button Amount",
+      "description": "Determines how many custom buttons will be on the chat bar.",
+      "type": "number",
+      "default": 1,
       "advice": "none"
     },
     "sendOnChange": {
