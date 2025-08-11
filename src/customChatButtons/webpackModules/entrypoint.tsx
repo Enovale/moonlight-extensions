@@ -2,7 +2,6 @@ import ChatButtonList from "@moonlight-mod/wp/componentEditor_chatButtonList";
 import { Tooltip } from "@moonlight-mod/wp/discord/components/common/index";
 import { SelectedChannelStore, ChannelStore } from "@moonlight-mod/wp/common_stores";
 import { openContextMenu, closeContextMenu } from "@moonlight-mod/wp/discord/actions/ContextMenuActionCreators";
-import { sendMessage } from "@moonlight-mod/wp/discord/actions/MessageActionCreators";
 import { Menu } from "@moonlight-mod/wp/discord/components/common/index";
 import { MenuItem } from "@moonlight-mod/wp/contextMenu_contextMenu";
 import ErrorBoundary from "@moonlight-mod/wp/common_ErrorBoundary";
@@ -17,6 +16,7 @@ const selectedButtonKey = extensionKey + "_selectedButton";
 
 const ChatBarButton = spacepack.findByCode("CHAT_INPUT_BUTTON_NOTIFICATION,width")[0].exports.Z;
 const ButtonStyles = spacepack.findByCode(",expressionPickerPositionLayer:")[0].exports;
+const { sendMessage } = spacepack.require("discord/actions/MessageActionCreators").default;
 
 function getStorageSelectedButton(index: number) {
     let ret = moonlight.localStorage.getItem(selectedButtonKey + index.toString());
