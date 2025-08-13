@@ -24,10 +24,11 @@ export const webpackModules: ExtensionWebExports["webpackModules"] = {
       { ext: "common", id: "stores" },
       { ext: "common", id: "ErrorBoundary" },
       { id: "discord/components/common/index" },
+      { id: "discord/actions/MessageActionCreators" },
+      { id: "discord/actions/ContextMenuActionCreators" },
       { ext: "contextMenu", id: "contextMenu" },
+      ",expressionPickerPositionLayer:",
       "CHAT_INPUT_BUTTON_NOTIFICATION,width",
-      "discord/actions/MessageActionCreators",
-      "discord/actions/ContextMenuActionCreators",
     ],
     entrypoint: true
   },

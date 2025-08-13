@@ -17,6 +17,7 @@ const selectedButtonKey = extensionKey + "_selectedButton";
 const ChatBarButton = spacepack.findByCode("CHAT_INPUT_BUTTON_NOTIFICATION,width")[0].exports.Z;
 const ButtonStyles = spacepack.findByCode(",expressionPickerPositionLayer:")[0].exports;
 const { sendMessage } = spacepack.require("discord/actions/MessageActionCreators").default;
+const getNonce = spacepack.findByCode(".fromTimestampWithSequence")[0].exports.r;
 
 function getStorageSelectedButton(index: number) {
     let ret = moonlight.localStorage.getItem(selectedButtonKey + index.toString());
@@ -80,7 +81,7 @@ function chatButton() {
                 return;
 
             let channel = ChannelStore.getChannel(SelectedChannelStore.getChannelId());
-            sendMessage(channel.id, { content: button.message });
+            sendMessage(channel.id, { content: button.message }, void 0, { nonce: getNonce() });
         }
 
         let button = getButton(buttonIdx);
