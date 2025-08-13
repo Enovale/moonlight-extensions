@@ -40,8 +40,8 @@ export const patches: ExtensionWebExports["patches"] = [
         replacement: (_, before, onClose, quest, middle) => `${before}onClose: ${onClose}, quest: ${quest},${middle}questVar = ${quest},onCloseVar = ${onClose},`
       },
       {
-        match: /(contentFooterButtonCont.*?\[)/,
-        replacement: (orig) => `${orig}require("orbsAutomation_entrypoint").SpoofButton({ quest: questVar, callback: onCloseVar }), `
+        match: /(?<=contentFooter,.*?contentFooterButtonCont(.*?)\[)(?=.*?copyLinkBtn.*?claimBtn)/,
+        replacement: `require("orbsAutomation_entrypoint").SpoofButton({ quest: questVar, callback: onCloseVar }), `
       }
     ]
   },
@@ -51,7 +51,7 @@ export const patches: ExtensionWebExports["patches"] = [
     replace: [
       // Make quest var accessible
       {
-        match: /let\{quest:(\i),(taskDetails:.*?=\i,)/g,
+        match: /let\{quest:(\i),(.*?=\i,)/,
         replacement: (_, quest, middle) => `let{quest: ${quest},${middle}questVar = ${quest},`
       },
       {
