@@ -1,3 +1,3 @@
 # Custom Chat Buttons
 
-Hopefully eventually a modular version of `meow` or `bark` from vencord.
+Modular version of [meow](https://github.com/Equicord/Equicord/tree/main/src/equicordplugins/meow) or [woof](https://github.com/Equicord/Equicord/tree/main/src/equicordplugins/woof) from Equicord.
