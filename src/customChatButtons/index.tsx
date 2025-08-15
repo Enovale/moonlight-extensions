@@ -73,6 +73,7 @@ export const webpackModules: ExtensionWebExports["webpackModules"] = {
     dependencies: [
       { id: "react" },
       { ext: "spacepack", id: "spacepack" },
+      { ext: "common", id: "ErrorBoundary" },
       ",spriteContainer:",
     ]
   }

@@ -1,9 +1,9 @@
 import spacepack from "@moonlight-mod/wp/spacepack_spacepack";
-import React from "@moonlight-mod/wp/react";
+import ErrorBoundary from "@moonlight-mod/wp/common_ErrorBoundary";
+import React, { useEffect, useState } from "@moonlight-mod/wp/react";
 
 import meowSvg from "../assets/meow.svg";
 import woofSvg from "../assets/woof.svg";
-import parse from 'html-react-parser';
 
 const SpriteStyles = spacepack.findByCode(",spriteContainer:")[0].exports;
 
@@ -29,37 +29,26 @@ export function SvgFromData({ path }: { path: string | undefined }) {
     if (!path)
         return null;
 
-    let data: string | React.ReactNode | React.ReactNode[] | undefined;
-    let isSvg: boolean;
+    const [spriteData, setSpriteData] = useState<SpriteDataDefinition>();
 
-    if (path in cachedImages) {
-        ({ data, isSvg } = cachedImages[path]);
-    } else {
-        if (path in builtinSprites)
-            data = builtinSprites[path], isSvg = true;
-        else
-            ({ data, isSvg } = natives.getImageData(path));
+    useEffect(() => {
+        if (path in cachedImages) {
+            setSpriteData(cachedImages[path]);
+        } else if (path in builtinSprites) {
+            cachedImages[path] = { data: natives.parseSvg(builtinSprites[path] as string), isSvg: true };
+            console.log(cachedImages[path]);
+            setSpriteData(cachedImages[path]);
+        }
 
-        if (isSvg)
-            data = parse(data as string, {
-                replace(domNode: any) {
-                    if (domNode.attribs && domNode.name === 'svg') {
-                        domNode.attribs.className = "customChatButtons-colored-svg";
-                        return domNode;
-                    }
-                }
-            });
-
-        cachedImages[path] = { data: data, isSvg: isSvg };
-    }
-
-    if (!data)
-        return null;
+        natives.getImageData(path, setSpriteData);
+    }, []);
 
     return (
-        <div className={`${SpriteStyles.spriteContainer} customChatButtons-colored-svg`}>
-            {isSvg && data}
-            {!isSvg && <img className="customChatButtons-colored-svg" src={data as string} />}
-        </div>
+        <ErrorBoundary noop={true}>
+            <div className={`${SpriteStyles.spriteContainer} customChatButtons-colored-svg`}>
+                {spriteData && spriteData.isSvg && spriteData.data}
+                {spriteData && !spriteData.isSvg && spriteData.data && <img className="customChatButtons-colored-svg" src={spriteData.data as string} />}
+            </div>
+        </ErrorBoundary>
     )
 }
