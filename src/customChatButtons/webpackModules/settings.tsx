@@ -64,7 +64,7 @@ export default function ButtonListSettings({ value = [], setValue }: CustomCompo
     const entries: ButtonEntry[] = value ?? [];
     const updateConfig = () => setValue(entries);
     const displayName = "Chat Buttons";
-    const description = "Test";
+    const description = null;
     const disabled = false;
 
     return (
