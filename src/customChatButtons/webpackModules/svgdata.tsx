@@ -14,7 +14,7 @@ interface SpriteDataDefinition {
     isSvg: boolean
 }
 
-interface BuiltinSpriteMap {
+export type BuiltinSpriteMap = {
     [key: string]: string | undefined
 }
 
