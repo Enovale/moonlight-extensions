@@ -1,7 +1,7 @@
 {
   "$schema": "https://moonlight-mod.github.io/manifest.schema.json",
   "id": "removeTopBar",
-  "version": "1.0.5",
+  "version": "1.0.6",
   "apiLevel": 2,
   "meta": {
     "name": "Remove Title Bar",
@@ -13,6 +13,7 @@
     "tags": ["appearance", "development"],
     "changelog": "Update patch for discord update"
   },
+  "dependencies": ["common"],
   "settings": {
     "moveButtons": {
       "displayName": "Move Title Bar Buttons",
