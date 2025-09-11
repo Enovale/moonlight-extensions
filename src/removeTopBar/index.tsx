@@ -6,8 +6,8 @@ export const patches: ExtensionWebExports["patches"] = [
   {
     find: "showNotificationsInbox",
     replace: {
-      match: /return \i\?null:\((?=.+?trailing:\(0,\i\.jsxs\)\(\i\.Fragment,{children:(\[.+?\]))/,
-      replacement: (_, buttons) => `require("removeTopBar_entrypoint").storeButtons(${buttons});return true ? null : (`
+      match: /(?<=var \i,\i;)(?=return\(.+?trailing:\(0,\i\.jsxs\)\(\i\.Fragment,{children:(\[.*?\)\]))/,
+      replacement: (_, buttons) => `require("removeTopBar_entrypoint").storeButtons(${buttons}); return null;`
     }
   },
   // Adjust margins for removed title bar
@@ -42,10 +42,6 @@ export const webpackModules: ExtensionWebExports["webpackModules"] = {
     dependencies: [
       {
         id: "react"
-      },
-      {
-        ext: "spacepack",
-        id: "spacepack"
       },
       {
         ext: "common",
