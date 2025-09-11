@@ -8,8 +8,8 @@ import ErrorBoundary from "@moonlight-mod/wp/common_ErrorBoundary";
 import spacepack from "@moonlight-mod/wp/spacepack_spacepack";
 import { useState } from "@moonlight-mod/wp/react";
 import React from "@moonlight-mod/wp/react";
-import { ButtonEntry } from "./settings";
-import { SvgFromData } from "./svgdata";
+import { ButtonEntry } from "@moonlight-mod/wp/customChatButtons_settings";
+import { SvgFromData } from "@moonlight-mod/wp/customChatButtons_svgdata";
 
 const extensionKey = "customChatButtons";
 const selectedButtonKey = extensionKey + "_selectedButton";
@@ -17,7 +17,7 @@ const selectedButtonKey = extensionKey + "_selectedButton";
 const ChatBarButton = spacepack.findByCode("CHAT_INPUT_BUTTON_NOTIFICATION,width")[0].exports.Z;
 const ButtonStyles = spacepack.findByCode(",expressionPickerPositionLayer:")[0].exports;
 const { sendMessage } = spacepack.require("discord/actions/MessageActionCreators").default;
-const getNonce = spacepack.findByCode(".fromTimestampWithSequence")[0].exports.r;
+const getNonce = Object.values(spacepack.findByCode(".fromTimestampWithSequence")[0].exports)[0];
 
 function getStorageSelectedButton(index: number) {
     let ret = moonlight.localStorage.getItem(selectedButtonKey + index.toString());

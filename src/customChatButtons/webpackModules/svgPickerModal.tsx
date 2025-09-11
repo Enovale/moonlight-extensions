@@ -16,8 +16,8 @@ import { openModal } from "@moonlight-mod/wp/discord/modules/modals/Modals";
 import Flex from "@moonlight-mod/wp/discord/uikit/Flex";
 import Margins from "@moonlight-mod/wp/discord/styles/shared/Margins.css";
 import ErrorBoundary from "@moonlight-mod/wp/common_ErrorBoundary";
-import { ButtonEntry } from "./settings";
-import { builtinSprites, SvgFromData } from "./svgdata";
+import { ButtonEntry } from "@moonlight-mod/wp/customChatButtons_settings";
+import { builtinSprites, SvgFromData } from "@moonlight-mod/wp/customChatButtons_svgdata";
 
 const ScrollbarStyles = spacepack.findByCode("scrollbarGhostHairline:")[0].exports;
 const TextAreaStyles = spacepack.findByCode(',errorOverflow:', '"text-md/normal":')[0].exports;

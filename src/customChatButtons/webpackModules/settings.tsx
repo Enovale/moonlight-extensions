@@ -17,8 +17,8 @@ import { CircleXIcon } from "@moonlight-mod/wp/discord/components/common/index";
 import Margins from "@moonlight-mod/wp/discord/styles/shared/Margins.css";
 import ErrorBoundary from "@moonlight-mod/wp/common_ErrorBoundary";
 
-import openSvgPickerModal from "./svgPickerModal";
-import { builtinSprites } from "./svgdata";
+import openSvgPickerModal from "@moonlight-mod/wp/customChatButtons_svgPickerModal";
+import { builtinSprites } from "@moonlight-mod/wp/customChatButtons_svgdata";
 
 export interface ButtonEntry {
     message: string,
