@@ -2,13 +2,19 @@ import { ExtensionWebExports } from "@moonlight-mod/types";
 
 // https://moonlight-mod.github.io/ext-dev/webpack/#patching
 export const patches: ExtensionWebExports["patches"] = [
-  // Prevent orbs videos from rendering
+  // Prevent orbs videos from rendering and playing sound
   {
     find: "[QV] | updatePlayerState | playerState:",
-    replace: {
-      match: /videoInner.*?\}\),/,
-      replacement: (orig) => `${orig}style: {display: 'none'},`
-    }
+    replace: [
+      {
+        match: /(?<=videoInner.*?\}\)),/,
+        replacement: `,style: {display: 'none'},`
+      },
+      {
+        match: /(?<=\(\i=>)\i.muted/,
+        replacement: `true`
+      },
+    ]
   },
   {
     find: "questEnrollmentBlockedUntil}))",
@@ -18,6 +24,16 @@ export const patches: ExtensionWebExports["patches"] = [
         match: /let\{quest:(\i),(.*?=\i,)/,
         replacement: (_, quest, middle) => `let{quest: ${quest},${middle}questVar = ${quest},`
       },
+      {
+        match: /,text\:(\i(?=>\,|\})|\i\.intl\.string\(.+?\))/g,
+        replacement: (_, orig) => `,text: \`Test! ${orig}\``
+      },
+      // Replace single buttons
+      {
+        match: /\(0,\i\.jsx\).{1,30}?\i\.button,children:\(.{1,30}?\"secondary\",disabled:.{1,70}?\}\)\}\)/g,
+        replacement: (orig) => `require("orbsAutomation_entrypoint").SpoofButton({ quest: questVar, existing: ${orig} })`
+      }
+      /*
       // Replace button arrays
       {
         match: /(\.Fragment,.*?)\[(\(.*?children:\i}\))\]/,
@@ -25,9 +41,10 @@ export const patches: ExtensionWebExports["patches"] = [
       },
       // Replace single buttons
       {
-        match: /(\(0,\i\.jsx\).{1,50}?\.(BRAND|PRIMARY),.{1,50}?\i\.button,.{0,50}?children:(\i|\i\.intl\.string\(.*?\))}\)):/g,
+        match: /(\(0,\i\.jsx\).{1,50}?\.(BRAND|PRIMARY),.{1,50}?\i\.button,.{0,50}?children:(.{0,10}?\i|\i\.intl\.string\(.*?\)(?:\]?))+}\)):/g,
         replacement: (_, self) => `require("orbsAutomation_entrypoint").SpoofButton({ quest: questVar, existing: ${self} }):`
       }
+      */
     ]
   },
   // Add spoof button to video playback modal
@@ -40,7 +57,7 @@ export const patches: ExtensionWebExports["patches"] = [
         replacement: (_, before, onClose, quest, middle) => `${before}onClose: ${onClose}, quest: ${quest},${middle}questVar = ${quest},onCloseVar = ${onClose},`
       },
       {
-        match: /(?<=contentFooter,.*?contentFooterButtonCont(.*?)\[)(?=.*?copyLinkBtn.*?claimBtn)/,
+        match: /(?<=contentFooter,.*?contentFooterButtonCont(.*?)\[)(?=.*?\"secondary\".*?claimBtn)/,
         replacement: `require("orbsAutomation_entrypoint").SpoofButton({ quest: questVar, callback: onCloseVar }), `
       }
     ]
