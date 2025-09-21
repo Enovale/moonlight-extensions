@@ -18,6 +18,7 @@ export const webpackModules: ExtensionWebExports["webpackModules"] = {
   entrypoint: {
     dependencies: [
       { ext: "customChatButtons", id: "svgdata" },
+      { ext: "customChatButtons", id: "settings" },
       { id: "react" },
       { ext: "spacepack", id: "spacepack" },
       { ext: "componentEditor", id: "chatButtonList" },

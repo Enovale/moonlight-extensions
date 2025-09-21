@@ -5,7 +5,7 @@
   "apiLevel": 2,
   "meta": {
     "name": "Custom Chat Buttons",
-    "tagline": "Modular port of meow and woof from Equicord",
+    "tagline": "Add custom buttons to the chat bar that send preset messages!",
     "description": "By default provides all functionality of [meow](https://github.com/Equicord/Equicord/tree/main/src/equicordplugins/meow) and [woof](https://github.com/Equicord/Equicord/tree/main/src/equicordplugins/woof) from Equicord.\n\nYou can add more buttons in the settings! The icons can be a local image file, a URL to an image (must be proxied by Discord), a raw Data URL, or a raw SVG.",
     "authors": ["Enova"],
     "donate": "https://ko-fi.com/enovale",
