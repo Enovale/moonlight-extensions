@@ -24,15 +24,21 @@ export const patches: ExtensionWebExports["patches"] = [
         match: /let\{quest:(\i),(.*?=\i,)/,
         replacement: (_, quest, middle) => `let{quest: ${quest},${middle}questVar = ${quest},`
       },
-      {
-        match: /,text\:(\i(?=>\,|\})|\i\.intl\.string\(.+?\))/g,
-        replacement: (_, orig) => `,text: \`Test! ${orig}\``
-      },
       // Replace single buttons
       {
-        match: /\(0,\i\.jsx\).{1,30}?\i\.button,children:\(.{1,30}?\"secondary\",disabled:.{1,70}?\}\)\}\)/g,
+        match: /\(0,\i\.jsx\).{1,30}?\.button,children:\(.{1,30}?\"secondary\",disabled:.{1,70}?\}\)\}\)/,
         replacement: (orig) => `require("orbsAutomation_entrypoint").SpoofButton({ quest: questVar, existing: ${orig} })`
-      }
+      },
+      // Replace Video Watch Button
+      {
+        match: /\(0,\i\.jsx\).{1,30}?\.button,children:\(.{1,30}?\"primary\",onClick:.{1,70}?\}\)\}\)/,
+        replacement: (orig) => `require("orbsAutomation_entrypoint").SpoofButton({ quest: questVar, existing: ${orig} })`
+      },
+      // Replace array
+      {
+        match: /(platformSelectorSecondary,.+?DESKTOP:.+?CONSOLE:.+?size:.+?\}\))(?:\])/,
+        replacement: (_, start) => `${start}, require("orbsAutomation_entrypoint").SpoofButton({ quest: questVar })]`
+      },
       /*
       // Replace button arrays
       {
@@ -57,7 +63,7 @@ export const patches: ExtensionWebExports["patches"] = [
         replacement: (_, before, onClose, quest, middle) => `${before}onClose: ${onClose}, quest: ${quest},${middle}questVar = ${quest},onCloseVar = ${onClose},`
       },
       {
-        match: /(?<=contentFooter,.*?contentFooterButtonCont(.*?)\[)(?=.*?\"secondary\".*?claimBtn)/,
+        match: /(?<=contentFooter.*?contentFooterButtonCont(.*?)\[)(?=.*?\"secondary\".*?(?:claimBtn|portraitCtaBtn))/g,
         replacement: `require("orbsAutomation_entrypoint").SpoofButton({ quest: questVar, callback: onCloseVar }), `
       }
     ]
