@@ -16,14 +16,13 @@ import { openModal } from "@moonlight-mod/wp/discord/modules/modals/Modals";
 import Flex from "@moonlight-mod/wp/discord/uikit/Flex";
 import Margins from "@moonlight-mod/wp/discord/styles/shared/Margins.css";
 import ErrorBoundary from "@moonlight-mod/wp/common_ErrorBoundary";
-import { ButtonEntry } from "@moonlight-mod/wp/customChatButtons_settings";
 import { builtinSprites, SvgFromData } from "@moonlight-mod/wp/customChatButtons_svgdata";
 
 const ScrollbarStyles = spacepack.findByCode("scrollbarGhostHairline:")[0].exports;
 const TextAreaStyles = spacepack.findByCode(',errorOverflow:', '"text-md/normal":')[0].exports;
 const TextAreaWrapperStyles = spacepack.findByCode("helperTextContainer:")[0].exports;
 
-export function SvgPickerModal({ entry, transitionState, onClose, setEntryVal }: { entry: ButtonEntry, transitionState: number | null, onClose: () => void, setEntryVal: (e: ButtonEntry) => void; }) {
+export function SvgPickerModal({ entry, transitionState, onClose, setEntryVal }: { entry: any, transitionState: number | null, onClose: () => void, setEntryVal: (e: any) => void; }) {
     let [btnEntry, setBtnEntry] = useState(entry);
 
     function DefaultButton({ path }: { path: string }) {
