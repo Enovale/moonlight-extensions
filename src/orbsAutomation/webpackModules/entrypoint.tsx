@@ -12,7 +12,6 @@ import spacepack from "@moonlight-mod/wp/spacepack_spacepack";
 import React from "@moonlight-mod/wp/react";
 const { HTTP } = spacepack.require("discord/utils/HTTPUtils");
 let PanelButton: (typeof import("@moonlight-mod/wp/discord/components/common/PanelButton"))["default"];
-PanelButton = spacepack.require("discord/components/common/PanelButton").default;
 
 // https://gist.github.com/aamiaa/204cd9d42013ded9faf646fae7f89fbb
 
@@ -29,6 +28,9 @@ interface SpoofButtonProps {
 }
 
 export function SpoofButton({ quest, existing, small, callback }: SpoofButtonProps) {
+    if (!PanelButton)
+        PanelButton = spacepack.require("discord/components/common/PanelButton").default;
+
     let button;
     if (QuestNeedsCompleting(quest)) {
         let questBeingCompleted = currentlyCompletingQuest === quest.id;

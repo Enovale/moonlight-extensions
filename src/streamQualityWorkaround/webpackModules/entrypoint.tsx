@@ -5,7 +5,6 @@ import React from "@moonlight-mod/wp/react";
 
 export const AudioActionCreators = spacepack.findByCode("AudioActionCreators")[0].exports.Z;
 let PanelButton: (typeof import("@moonlight-mod/wp/discord/components/common/PanelButton"))["default"];
-PanelButton = spacepack.require("discord/components/common/PanelButton").default;
 
 const logger = moonlight.getLogger("streamQualityWorkaround/entrypoint");
 
@@ -23,6 +22,9 @@ interface QualityOptions {
 }
 
 export function ActionsWrapper() {
+    if (!PanelButton)
+        PanelButton = spacepack.require("discord/components/common/PanelButton").default;
+
     return (
         <PanelButton className="streamQualityWorkaround-refresh" icon={ScreenIcon} tooltipText="Reset Stream Quality" onClick={() => FixStreamQuality()} />
     );
