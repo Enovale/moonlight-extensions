@@ -4,7 +4,8 @@ import { ExtensionWebExports } from "@moonlight-mod/types";
 export const patches: ExtensionWebExports["patches"] = [
   {
     find: "discord/utils/AvatarUtils",
-    replace: {
+    replace:
+    {
       match: /(getUserAvatarURL:)(\i),/,
       replacement: (_, before, original) => `${before}require("userpfp_entrypoint").getAvatarHook(${original}),`
     }
