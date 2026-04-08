@@ -6,7 +6,7 @@ export const patches: ExtensionWebExports["patches"] = [
   {
     find: "showNotificationsInbox",
     replace: {
-      match: /(?<=var \i,\i;)(?=return\(.+?trailing:\(0,\i\.jsxs\)\(\i\.Fragment,{children:(\[.*?\)\]))/,
+      match: /(?<=\}\);)(?=return.+?trailing:\(0,\i\.jsxs\)\(\i\.Fragment,{children:(\[.*?\)\]))/,
       replacement: (_, buttons) => `require("removeTopBar_entrypoint").storeButtons(${buttons}); return null;`
     }
   },
@@ -14,16 +14,16 @@ export const patches: ExtensionWebExports["patches"] = [
   {
     find: "guildsnav",
     replace: {
-      match: /className:\i\.itemsContainer,/,
+      match: /role:"tree",/,
       replacement: (orig: string) => `${orig}style: {marginTop: "var(--space-8)"},`
     }
   },
   // Add buttons
   {
-    find: `["isAuthenticated"]`,
+    find: "getDefaultDoubleClickAction",
     replace: {
-      match: /\.toggleParticipantsList\(\i,!\i\)}\)]}\)/,
-      replacement: (orig: string) => `${orig},require("removeTopBar_entrypoint").getIcons()`
+      match: /(?<=,\{children:\[.*?)(?=\])/,
+      replacement: () => `,require("removeTopBar_entrypoint").getIcons()`
     }
   },
   // Add icons to voice chat toolbar
