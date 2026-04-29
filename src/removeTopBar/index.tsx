@@ -6,7 +6,7 @@ export const patches: ExtensionWebExports["patches"] = [
   {
     find: "showNotificationsInbox",
     replace: {
-      match: /(?<=\}\);)(?=return.+?trailing:\(0,\i\.jsxs\)\(\i\.Fragment,{children:(\[.*?\)\]))/,
+      match: /(?<=[}"]\);)(?=return.+?trailing:\(0,\i\.jsxs\)\(\i\.Fragment,{children:(\[.*?\)\]))/,
       replacement: (_, buttons) => `require("removeTopBar_entrypoint").storeButtons(${buttons}); return null;`
     }
   },
@@ -46,9 +46,6 @@ export const webpackModules: ExtensionWebExports["webpackModules"] = {
       {
         ext: "common",
         id: "stores"
-      },
-      {
-        id: "discord/components/common/index"
       },
       {
         ext: "common",
